@@ -12,7 +12,7 @@ const Splash = (props) => {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Image
-        source={require('../images/LogoChao.png')}
+        source={require('../images/banner.png')}
         style={{
           width: 150,
           height: 150,
