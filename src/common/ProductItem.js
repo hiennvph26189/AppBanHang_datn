@@ -1,7 +1,15 @@
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
+import { useNavigation } from '@react-navigation/native';
 
-const ProductItem = ({item}) => {
+const ProductItem = (props) => {
+    const item = props.item
+    const navigation = useNavigation();
+    const price =(price)=>{
+        let x = price;
+        x = x.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+        return  x;
+}
   return (
     <TouchableOpacity style={{
         borderRadius:20,

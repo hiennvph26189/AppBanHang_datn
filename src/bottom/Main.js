@@ -6,7 +6,7 @@ import MyProductItem from '../common/MyProductItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart } from '../redux/actions/Actions';
 import axios from 'axios';
-import { API_GETCATEGORY, API_HOT_PRODUCTS, API_HOTSALE_PRODUCTS,API_NEW_PRODUCTS } from '../../API';
+import { API_GETCATEGORY, API_HOT_PRODUCTS, API_HOTSALE_PRODUCTS, API_NEW_PRODUCTS, API_PRODUCT_CATEGORY } from '../../API';
 import ItemLuotMua from '../common/ItemLuotMua'
 
 const Main = () => {
@@ -20,6 +20,7 @@ const Main = () => {
     const [listHotBuy, setListHotBuy] = useState([]);
     const [listSaleProduct, setSaleProduct] = useState([]);
     const [listNewProduct, setNewProduct] = useState([]);
+    const [listCategoryProduct, setListCategoryProduct] = useState([]);
 
     const getHot = async () => {
         axios.get(API_HOT_PRODUCTS).then((res) => {
@@ -41,21 +42,31 @@ const Main = () => {
     }
     const getHotSale = async () => {
         axios.get(API_HOTSALE_PRODUCTS).then((res) => {
-            console.log(res+"sales");
+
             if (res.data.errCode === 0) {
 
                 setSaleProduct(res.data.saleProduct)
-                
+
             }
         }).catch((err) => { console.log(err) })
     }
     const getNewProduct = async () => {
         axios.get(API_NEW_PRODUCTS).then((res) => {
-            console.log(res+"sales");
+            console.log(res + "sales");
             if (res.data.errCode === 0) {
 
                 setNewProduct(res.data.newProduct)
-                
+
+            }
+        }).catch((err) => { console.log(err) })
+    }
+    const getProductCate = async () => {
+        axios.get(API_PRODUCT_CATEGORY).then((res) => {
+            console.log(res + "category");
+            if (res.data.errCode === 0) {
+
+                setListCategoryProduct(res.data.data)
+
             }
         }).catch((err) => { console.log(err) })
     }
@@ -65,6 +76,7 @@ const Main = () => {
         getHot();
         getHotSale();
         getNewProduct();
+        getProductCate();
         let tempCategory = [];
         products.category.map(item => {
             tempCategory.push(item);
@@ -76,6 +88,32 @@ const Main = () => {
         setJackList(products.category[3].data);
         setSlipperList(products.category[4].data);
     }, []);
+    // listDanhSach = (id) => {
+    //     return (
+    //         <>
+    //             <FlatList
+    //                 data={tShirtList.filter((p) => p.idDanhSach === id)}
+    //                 horizontal
+    //                 showsHorizontalScrollIndicator={false}
+    //                 keyExtractor={(item, index) => index.toString()}
+    //                 extraData={id}
+
+    //                 renderItem={({ item }) => {
+    //                     return (
+    //                         <MyProductItem
+    //                             item={item}
+
+    //                             // addCart={addCart}
+    //                         />
+    //                     );
+    //                 }
+    //                 }
+
+    //             />
+
+    //         </>
+    //     )
+    // }
 
     return (
         <ScrollView style={{ flex: 1 }}>
@@ -112,146 +150,133 @@ const Main = () => {
                     />
                 </View>
                 <View style={{ marginTop: 20 }}>
-                {listNewProduct && listNewProduct.length>0 &&
-                                <>
-                        <View style={{
-                            flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ccc", borderBottomWidth: 1, marginRight: 15, paddingBottom: 5,
-                            marginLeft: 20,
-                        }}>
-                            <Text style={{
-                                color: '#000',
-                                fontSize: 16,
-                                fontWeight: '600',
-
+                    {listNewProduct && listNewProduct.length > 0 &&
+                        <>
+                            <View style={{
+                                flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ccc", borderBottomWidth: 1, marginRight: 15, paddingBottom: 5,
+                                marginLeft: 20,
                             }}>
-                                Sản phẩm mới
-                            </Text>
+                                <Text style={{
+                                    color: '#000',
+                                    fontSize: 16,
+                                    fontWeight: '600',
 
-                            {/* <TouchableOpacity onPress={() => { danhSachSabPham("luotMuaNhieu", "Lượt mua nhiều nhất") }} >
+                                }}>
+                                    Sản phẩm mới
+                                </Text>
+
+                                {/* <TouchableOpacity onPress={() => { danhSachSabPham("luotMuaNhieu", "Lượt mua nhiều nhất") }} >
 <Text style={{ fontSize: 16, fontWeight: "600", textDecorationLine: "underline", fontStyle: "italic", color: "#3399FF" }}>Xem tất cả</Text>
 </TouchableOpacity> */}
-                        </View>
-                        <ScrollView ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
-                        {listNewProduct && listNewProduct.map((item) => {
-                            return (
+                            </View>
+                            <ScrollView ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
+                                {listNewProduct && listNewProduct.map((item) => {
+                                    return (
 
-                                <ItemLuotMua key={item.id}
-                                    item={item}
+                                        <ItemLuotMua key={item.id}
+                                            item={item}
 
-                                />
-                            )
-                        })}
+                                        />
+                                    )
+                                })}
 
-                     </ScrollView>
-                    </>
+                            </ScrollView>
+                        </>
                     }
                     {listHotBuy && listHotBuy.length > 0 &&
                         <>
-                        <View style={{
-                            flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ccc", borderBottomWidth: 1, marginRight: 15, paddingBottom: 5,
-                            marginLeft: 20,
-                        }}>
-                            <Text style={{
-                                color: '#000',
-                                fontSize: 16,
-                                fontWeight: '600',
-
+                            <View style={{
+                                flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ccc", borderBottomWidth: 1, marginRight: 15, paddingBottom: 5,
+                                marginLeft: 20,
                             }}>
-                                Lượt mua nhiều nhất
-                            </Text>
+                                <Text style={{
+                                    color: '#000',
+                                    fontSize: 16,
+                                    fontWeight: '600',
 
-                            {/* <TouchableOpacity onPress={() => { danhSachSabPham("luotMuaNhieu", "Lượt mua nhiều nhất") }} >
+                                }}>
+                                    Lượt mua nhiều nhất
+                                </Text>
+
+                                {/* <TouchableOpacity onPress={() => { danhSachSabPham("luotMuaNhieu", "Lượt mua nhiều nhất") }} >
             <Text style={{ fontSize: 16, fontWeight: "600", textDecorationLine: "underline", fontStyle: "italic", color: "#3399FF" }}>Xem tất cả</Text>
           </TouchableOpacity> */}
-                        </View>
-                        <ScrollView ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
-                        {listHotBuy && listHotBuy.map((item) => {
-                            return (
+                            </View>
+                            <ScrollView ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
+                                {listHotBuy && listHotBuy.map((item) => {
+                                    return (
 
-                                <ItemLuotMua key={item.id}
-                                    item={item}
+                                        <ItemLuotMua key={item.id}
+                                            item={item}
 
-                                />
-                            )
-                        })}
+                                        />
+                                    )
+                                })}
 
-                    </ScrollView>
-                    </>
+                            </ScrollView>
+                        </>
                     }
-                    
-                    {listSaleProduct && listSaleProduct.length>0&&
-                                <>
-                        <View style={{
-                            flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ccc", borderBottomWidth: 1, marginRight: 15, paddingBottom: 5,
-                            marginLeft: 20,
-                        }}>
-                            <Text style={{
-                                color: '#000',
-                                fontSize: 16,
-                                fontWeight: '600',
 
+                    {listSaleProduct && listSaleProduct.length > 0 &&
+                        <>
+                            <View style={{
+                                flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ccc", borderBottomWidth: 1, marginRight: 15, paddingBottom: 5,
+                                marginLeft: 20,
                             }}>
-                                Hole Sale
-                            </Text>
+                                <Text style={{
+                                    color: '#000',
+                                    fontSize: 16,
+                                    fontWeight: '600',
 
-                            {/* <TouchableOpacity onPress={() => { danhSachSabPham("luotMuaNhieu", "Lượt mua nhiều nhất") }} >
+                                }}>
+                                    Hole Sale
+                                </Text>
+
+                                {/* <TouchableOpacity onPress={() => { danhSachSabPham("luotMuaNhieu", "Lượt mua nhiều nhất") }} >
 <Text style={{ fontSize: 16, fontWeight: "600", textDecorationLine: "underline", fontStyle: "italic", color: "#3399FF" }}>Xem tất cả</Text>
 </TouchableOpacity> */}
-                        </View>
-                        <ScrollView ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
-                        {listSaleProduct && listSaleProduct.map((item) => {
-                            return (
+                            </View>
+                            <ScrollView ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
+                                {listSaleProduct && listSaleProduct.map((item) => {
+                                    return (
 
-                                <ItemLuotMua key={item.id}
-                                    item={item}
+                                        <ItemLuotMua key={item.id}
+                                            item={item}
 
-                                />
-                            )
-                        })}
-
-                     </ScrollView>
-                    </>
-                    }
-                
-                    
-                </View>
-                <View style={{ flex: 1 }}>
-                    <FlatList style={{ flex: 1 }}
-                        data={categoryList}
-                        renderItem={({ item, index }) => {
-                            return (
-                                <View>
-                                    <Text
-                                        style={{
-                                            marginHorizontal: 10,
-                                            marginVertical: 8,
-                                            fontSize: 16,
-                                            color: 'black',
-                                            fontWeight: 'bold',
-                                        }}
-                                    >
-                                        {item.name}
-                                    </Text>
-                                    <View style={{ marginTop: 20 }}>
-                                        <FlatList
-                                            data={tShirtList}
-                                            horizontal
-                                            showsHorizontalScrollIndicator={false}
-                                            renderItem={({ item, index }) => {
-                                                return (
-                                                    <MyProductItem
-                                                        item={item}
-                                                        onAddToCart={add => {
-                                                            dispatch(addItemToCart(item));
-                                                        }} />
-                                                );
-                                            }}
                                         />
+                                    )
+                                })}
+
+                            </ScrollView>
+                        </>
+                    }
+
+                    {listCategoryProduct && listCategoryProduct.length > 0 &&
+                        <>
+                            {listCategoryProduct.map((item) => (
+                                <View key={item.id}>
+                                    <View style={{
+                                        flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ccc", borderBottomWidth: 1, marginRight: 15, paddingBottom: 5,
+                                        marginLeft: 20,
+                                    }}>
+                                        <Text style={{
+                                            color: '#000',
+                                            fontSize: 16,
+                                            fontWeight: '600',
+
+                                        }}>
+                                            {item.name}
+                                        </Text>
                                     </View>
+                                    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
+                                        {item.products.map((item) => (
+                                            <ItemLuotMua key={item.id} item={item} />
+                                        ))}
+                                    </ScrollView>
                                 </View>
-                            );
-                        }}
-                    />
+                            ))}
+                        </>
+                    }
                 </View>
             </View>
         </ScrollView>
