@@ -8,7 +8,7 @@ const ItemLuotMua = (props) => {
     const item = props.item
     const navigation = useNavigation();
     useEffect(()=>{
-        // console.log(item)
+        console.log(item)
     })
     // const info = useSelector(state => state.Reducers.arrUser);
     // showImage = (image)=>{
@@ -59,7 +59,7 @@ const ItemLuotMua = (props) => {
         // }
     }
     handleDetailProduct = (id)=>{
-        navigation.navigate('Chi tiết sản phẩm',{id: id},{handleDetailProduct:{handleDetailProduct}});
+        navigation.navigate('ProductDetail',{id: id},{handleDetailProduct:{handleDetailProduct}});
     }
     return (
         <TouchableOpacity  onPress={()=>{handleDetailProduct(item.id)}} style={{
@@ -69,7 +69,7 @@ const ItemLuotMua = (props) => {
             elevation: 5,
             backgroundColor: '#fff',
             marginLeft: 20,
-            marginBottom: 10,
+            marginBottom: 40,
         }}>
             <View style={{
                        
