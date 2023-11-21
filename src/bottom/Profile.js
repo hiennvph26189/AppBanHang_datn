@@ -1,10 +1,9 @@
-import {  View,SafeAreaView,ScrollView,RefreshControl,StyleSheet,Button,Pressable } from "react-native";
-import {Avatar, Title,Caption, Text,TouchableRipple} from 'react-native-paper';
+import {  View,SafeAreaView,ScrollView,RefreshControl,StyleSheet,Button,Pressable,Text } from "react-native";
 import React, { useState,useEffect } from 'react';
 import { useNavigation,useIsFocused } from "@react-navigation/native";
 import { createNativeStackNavigator, } from '@react-navigation/native-stack';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import {useDispatch, useSelector} from 'react-redux';
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
 import Header from "../common/Header";
 
