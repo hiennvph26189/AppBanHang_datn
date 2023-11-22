@@ -7,7 +7,9 @@ import Login from '../Screens/Login';
 import Signup from '../Screens/Signup';
 import Home from '../Screens/Home';
 import ProductDetail from '../common/ProductDetail';
+import ListProducts from '../common/ListProducts';
 import Main from '../bottom/Main';
+import EditProfile from '../common/EditProfile';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +21,9 @@ const AppNavigator = () => {
                 <Stack.Screen options={{ headerShown: false }} name='Splash' component={Splash} />
                 <Stack.Screen options={{ headerShown: false }} name='Login' component={Login} />
                 <Stack.Screen options={{ headerShown: false }} name='Signup' component={Signup} />
+                <Stack.Screen options={{headerShown: false }} name='ListProducts' component={ListProducts}/>
                 <Stack.Screen options={{headerShown: false }} name='ProductDetail' component={ProductDetail}/>
+                <Stack.Screen options={{headerShown: false }} name='Editprofile' component={EditProfile}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

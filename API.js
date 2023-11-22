@@ -1,4 +1,5 @@
 export const URL = 'http://192.168.1.252:8080/';
+// export const URL = 'http://192.168.1.7:8080/';
 // export const LOGIN = URL + '';
 // export const REGISTER = URL +'';
 // export const API_GETCATEGORY = URL + 'app-list-category';

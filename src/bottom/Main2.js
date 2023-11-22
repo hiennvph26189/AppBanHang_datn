@@ -32,7 +32,7 @@ const Main = (props) => {
             }
         }).catch((error) => { console.log(error) });
     }
- 
+
     const loadCategories = async () => {
         await axios.get(GETCATEGORIES).then((res) => {
 
@@ -47,7 +47,7 @@ const Main = (props) => {
     useEffect(() => {
         loadAllProducts()
         loadCategories()
-       
+
     }, [isFocused]);
 
     onRefresh = () => {
@@ -56,8 +56,8 @@ const Main = (props) => {
         loadAllProducts()
     }
 
-    const addCart = ()=>{
-       
+    const addCart = () => {
+
         props.addCart()
     }
 
@@ -65,7 +65,7 @@ const Main = (props) => {
         return (
             <>
                 <FlatList
-                
+
                     data={arrProducts && arrProducts.filter((p) => p.idDanhSach === id)}
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -74,10 +74,10 @@ const Main = (props) => {
 
                     renderItem={({ item }) => {
                         return (
-                            <MyProductItem 
-                            item={item}
-                               
-                                addCart = {addCart}
+                            <MyProductItem
+                                item={item}
+
+                                addCart={addCart}
                             />
                         );
                     }
@@ -88,20 +88,20 @@ const Main = (props) => {
             </>
         )
     }
-    danhSachSabPham = (id,name)=>{
-       
-        navigation.navigate('Danh Sách sản phẩm',{id: id,name: name});
+    danhSachSabPham = (id, name) => {
+
+        navigation.navigate('ListProducts', { id: id, name: name });
     }
     const litProducts = () => {
         return (
             categoryList.map((item, i) => {
                 return (
-                    <TouchableOpacity onPress={()=>{danhSachSabPham(item.id,item.name)}} key={item.id} style={{
+                    <TouchableOpacity onPress={() => { danhSachSabPham(item.id, item.name) }} key={item.id} style={{
                         padding: 10,
                         borderWidth: 1,
                         marginLeft: 20,
                         borderRadius: 20,
-                       
+
                     }}>
                         <Text style={{ color: '#000' }}>{item.name}</Text>
 
@@ -112,136 +112,142 @@ const Main = (props) => {
 
     }
     return (
-     <>
-        <Header
-                    title={'Home'} />
-    
-        <ScrollView
-            refreshControl={
-                <RefreshControl
-                    refreshing={refreshing}
-                    onRefresh={() => { onRefresh() }}
-                />
-            }
-            nestedScrollEnabled={true}
-            style={{ flex: 1, marginBottom:10 }}>
-            <View style={{ flex: 1, marginBottom: 40 }}>
-                
-                <Image source={require('../images/banner.png')}
-                    style={{
-                        width: '94%',
-                        height: 200,
-                        borderRadius: 10,
-                        alignSelf: 'center',
-                        marginTop: 10,
-                    }}
-                />
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
-                    {litProducts()}
-                </ScrollView>
-                {hotSale &&
-     
-                    <View style={{ marginTop: 20 }}>
-                        <View style={{flexDirection:"row", justifyContent:"space-between",alignItems:"center", borderBottomColor:"#ccc",borderBottomWidth:1,marginRight:15,paddingBottom:5,
-                        marginLeft: 20,}}>
-                        <Text style={{
-                        color: '#000',
-                        fontSize: 16,
-                        fontWeight: '600',
-                        
-                    }}>
-                       Hot Sale
-                    </Text>
-                    
+        <>
+            <Header
+                title={'Home'} />
 
-                    <TouchableOpacity onPress={()=>{danhSachSabPham("hotSale","Hot Sale")}} >
-                        <Text style={{ fontSize: 16,fontWeight:"600",textDecorationLine:"underline",fontStyle:"italic",color:"#3399FF"}}>Xem tất cả</Text>
-                    </TouchableOpacity>
-                    </View>
-                        
-                        <ScrollView ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
-                                {hotSale&&hotSale.map((item)=>{
+            <ScrollView
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={() => { onRefresh() }}
+                    />
+                }
+                nestedScrollEnabled={true}
+                style={{ flex: 1, marginBottom: 10 }}>
+                <View style={{ flex: 1, marginBottom: 40 }}>
+
+                    <Image source={require('../images/banner.png')}
+                        style={{
+                            width: '94%',
+                            height: 200,
+                            borderRadius: 10,
+                            alignSelf: 'center',
+                            marginTop: 10,
+                        }}
+                    />
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
+                        {litProducts()}
+                    </ScrollView>
+                    {hotSale &&
+
+                        <View style={{ marginTop: 20 }}>
+                            <View style={{
+                                flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ccc", borderBottomWidth: 1, marginRight: 15, paddingBottom: 5,
+                                marginLeft: 20,
+                            }}>
+                                <Text style={{
+                                    color: '#000',
+                                    fontSize: 16,
+                                    fontWeight: '600',
+
+                                }}>
+                                    Hot Sale
+                                </Text>
+
+
+                                <TouchableOpacity onPress={() => { danhSachSabPham("hotSale", "Hot Sale") }} >
+                                    <Text style={{ fontSize: 16, fontWeight: "600", textDecorationLine: "underline", fontStyle: "italic", color: "#3399FF" }}>Xem tất cả</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                            <ScrollView ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
+                                {hotSale && hotSale.map((item) => {
                                     return (
-                                        <ItemLuotMua key = {item.id}
-                                        item={item}
-                                        addCart = {addCart}
-                                />
+                                        <ItemLuotMua key={item.id}
+                                            item={item}
+                                            addCart={addCart}
+                                        />
                                     )
                                 })}
-                        </ScrollView>
-                    </View>
+                            </ScrollView>
+                        </View>
                     }
-                    
-                {luotMuaNhieu &&
 
-             
-                <View style={{ marginTop: 20 }}>
-                    <View style={{flexDirection:"row", justifyContent:"space-between",alignItems:"center", borderBottomColor:"#ccc",borderBottomWidth:1,marginRight:15,paddingBottom:5,
-                        marginLeft: 20,}}>
-                        <Text style={{
-                        color: '#000',
-                        fontSize: 16,
-                        fontWeight: '600',
-                        
-                    }}>
-                        Lượt mua nhiều nhất
-                    </Text>
-                    
+                    {luotMuaNhieu &&
 
-                    <TouchableOpacity onPress={()=>{danhSachSabPham("luotMuaNhieu","Lượt mua nhiều nhất")}} >
-                        <Text style={{ fontSize: 16,fontWeight:"600",textDecorationLine:"underline",fontStyle:"italic",color:"#3399FF"}}>Xem tất cả</Text>
-                    </TouchableOpacity>
-                    </View>
-                    
-                    <ScrollView ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
-                            {luotMuaNhieu&&luotMuaNhieu.map((item)=>{
-                                return (
-                                    <ItemLuotMua key = {item.id}
-                                     item={item}
-                                    addCart = {addCart}
-                            />
-                                )
-                            })}
-                    </ScrollView>
-                </View>
-                   }
-                    
-                    <ScrollView  style={{ marginTop: 20 }}>
-                        {categoryList && categoryList.map((item, index) =>{
-                            return(
-                                <View key={index}>
-                                    <View style={{flexDirection:"row", justifyContent:"space-between",alignItems:"center", borderBottomColor:"#ccc",borderBottomWidth:1,marginRight:15,paddingBottom:5,
-                                        marginLeft: 20,}}>
-                                        <Text style={{
-                                        color: '#000',
-                                        fontSize: 16,
-                                        fontWeight: '600',
-                                        
-                                    }}>
-                                        {item.name}
-                                    </Text>
-                                 
 
-                                    <TouchableOpacity onPress={()=>{danhSachSabPham(item.id,item.name)}} >
-                                        <Text style={{ fontSize: 16,fontWeight:"600",textDecorationLine:"underline",fontStyle:"italic",color:"#3399FF"}}>Xem tất cả</Text>
-                                    </TouchableOpacity>
-                                    </View>
-                                
-                                <View style={{ marginTop: 15 }}>
-                                    {listDanhSach(item.id)}
-                                </View>
+                        <View style={{ marginTop: 20 }}>
+                            <View style={{
+                                flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ccc", borderBottomWidth: 1, marginRight: 15, paddingBottom: 5,
+                                marginLeft: 20,
+                            }}>
+                                <Text style={{
+                                    color: '#000',
+                                    fontSize: 16,
+                                    fontWeight: '600',
+
+                                }}>
+                                    Lượt mua nhiều nhất
+                                </Text>
+
+
+                                <TouchableOpacity onPress={() => { danhSachSabPham("luotMuaNhieu", "Lượt mua nhiều nhất") }} >
+                                    <Text style={{ fontSize: 16, fontWeight: "600", textDecorationLine: "underline", fontStyle: "italic", color: "#3399FF" }}>Xem tất cả</Text>
+                                </TouchableOpacity>
                             </View>
+
+                            <ScrollView ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
+                                {luotMuaNhieu && luotMuaNhieu.map((item) => {
+                                    return (
+                                        <ItemLuotMua key={item.id}
+                                            item={item}
+                                            addCart={addCart}
+                                        />
+                                    )
+                                })}
+                            </ScrollView>
+                        </View>
+                    }
+
+                    <ScrollView style={{ marginTop: 20 }}>
+                        {categoryList && categoryList.map((item, index) => {
+                            return (
+                                <View key={index}>
+                                    <View style={{
+                                        flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ccc", borderBottomWidth: 1, marginRight: 15, paddingBottom: 5,
+                                        marginLeft: 20,
+                                    }}>
+                                        <Text style={{
+                                            color: '#000',
+                                            fontSize: 16,
+                                            fontWeight: '600',
+
+                                        }}>
+                                            {item.name}
+                                        </Text>
+
+
+                                        <TouchableOpacity onPress={() => { danhSachSabPham(item.id, item.name) }} >
+                                            <Text style={{ fontSize: 16, fontWeight: "600", textDecorationLine: "underline", fontStyle: "italic", color: "#3399FF" }}>Xem tất cả</Text>
+                                        </TouchableOpacity>
+                                    </View>
+
+                                    <View style={{ marginTop: 15 }}>
+                                        {listDanhSach(item.id)}
+                                    </View>
+                                </View>
                             )
-                            
+
                         })}
-                        
+
 
                     </ScrollView>
-               
-            </View>
-        </ScrollView>
+
+                </View>
+            </ScrollView>
         </>
-        
+
     )
 }
 export default Main;
