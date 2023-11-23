@@ -1,9 +1,29 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity,useWindowDimensions, Image } from 'react-native'
+// import Moment from 'moment';
 import React from 'react'
+// import fr from "moment/locale/fr";
+import { useNavigation,useIsFocused } from "@react-navigation/native";
 
-const NewsItem = () => {
+const NewsItem = (props) => {
+    const id = props.id;
+    const item = props.arrNews;
+    const navigation = useNavigation();
+    const { width } = useWindowDimensions();
+    const tomTatTinTuc = {
+        html: `${item.tomTatTinTuc}`
+      };
+      const formatDate= (date)=>{
+        const newFr = Moment(date).locale("vi", fr).format("DD/MM/YYYY ");
+        return newFr
+    }
+    newsDetail = (item)=>{
+        if(item){
+            navigation.navigate('Chi tiết tin tức',{item: item});
+        }
+
+    }
   return (
-        <TouchableOpacity style={{flexDirection:'row',width:"100%", padding:5, marginTop:15,borderBottomColor:"#ccc",borderBottomWidth:1}}>
+        <TouchableOpacity key={id} onPress={()=>{newsDetail(item)}}  style={{flexDirection:'row',width:"100%", padding:5, marginTop:15,borderBottomColor:"#ccc",borderBottomWidth:1}}>
             <View>
                 <Image source={require('../images/pants1.jpg')}
                 style={{width:120, height:120}}
