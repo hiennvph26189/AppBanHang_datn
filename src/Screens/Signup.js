@@ -15,7 +15,7 @@ const Signup = () => {
     const [address, setAddress] = useState('');
     const [BadAddress, setBadAddress] = useState(false);
     const [password, setPassword] = useState('');
-    const [BadPassWord, setBadPassWork] = useState(false);
+    const [BadPassWord, setBadPassWord] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState('');
     const [badConfirmPassword, setBadConfirmPassword] = useState(false);
     const [phone, setPhone] = useState('');
@@ -79,9 +79,9 @@ const Signup = () => {
             return
         }
         if (password) {
-            setBadPassWork(false)
+            setBadPassWord(false)
         } else {
-            setBadPassWork(true)
+            setBadPassWord(true)
             setErrMessage("Vui lòng nhập mật khẩu của bạn")
             return
         }

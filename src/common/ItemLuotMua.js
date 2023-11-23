@@ -61,7 +61,7 @@ const ItemLuotMua = (props) => {
         }
     }
     handleDetailProduct = (id)=>{
-        navigation.navigate('Chi tiết sản phẩm',{id: id},{handleDetailProduct:{handleDetailProduct}});
+        navigation.navigate('ProductDetail',{id: id},{handleDetailProduct:{handleDetailProduct}});
     }
     return (
         <TouchableOpacity  onPress={()=>{handleDetailProduct(item.id)}} style={{
@@ -93,7 +93,7 @@ const ItemLuotMua = (props) => {
                 fontSize: 16,
                 fontWeight: '600',
             }}>
-                {item.tenSp}</Text>
+                {item.tenSp} </Text>
             <View style={{
                 paddingLeft: 10,
                 paddingRight: 10,

@@ -10,6 +10,8 @@ import ProductDetail from '../common/ProductDetail';
 import ListProducts from '../common/ListProducts';
 import Main from '../bottom/Main';
 import EditProfile from '../common/EditProfile';
+import RePass from '../edit/RePass';
+import HistoryBuy from '../edit/HistoryBuy';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +26,8 @@ const AppNavigator = () => {
                 <Stack.Screen options={{headerShown: false }} name='ListProducts' component={ListProducts}/>
                 <Stack.Screen options={{headerShown: false }} name='ProductDetail' component={ProductDetail}/>
                 <Stack.Screen options={{headerShown: false }} name='Editprofile' component={EditProfile}/>
+                <Stack.Screen options={{headerShown: false }} name='RePasswd' component={RePass}/>
+                <Stack.Screen options={{headerShown: false }} name='History' component={HistoryBuy}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

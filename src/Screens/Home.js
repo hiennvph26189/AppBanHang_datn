@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Main from "../bottom/Main";
 import Contact from "../bottom/Contact";
 import Cart from "../bottom/Cart";
@@ -7,16 +7,47 @@ import Profile from "../bottom/Profile";
 import { useSelector } from "react-redux";
 import News from "../bottom/News";
 import Main2 from "../bottom/Main2";
+import {GETCARTUSER} from "../../API"
+import axios from "axios";
+import { useIsFocused } from "@react-navigation/native";
 
-
-const Home = () => {
+const Home = (props) => {
+    const info = useSelector(state => state.Reducers.arrUser);
+    const isFocused = useIsFocused();
+    const navigation = props.navigation;
     const [selectedTab, setSelectedTab] = useState(0);
-
+    const [length, setLenght] = useState(0);
     const data = useSelector(state => state);
 
+    const listCart = async()=>{
+        let count = 0
+        if(info.id){
+            let idUser = info.id;
+            await axios.get(`${GETCARTUSER}?id=${idUser}`).then(res=>{
+                if(res.data.errCode == 0){
+                    res.data.Carts.map((item)=>{
+                        count = count +1
+                    })
+                    
+                }
+            })
+
+        }
+        setLenght(count)  
+    }
+    const deleteCart = ()=>{
+        listCart()
+    }
+    const addCart = ()=>{
+        listCart()
+    }
+
+    useEffect(() => {
+        listCart()
+    }, [isFocused])
     return (
         <View style={{ flex: 1 }}>
-            {selectedTab == 0 ? (<Main2 />) : selectedTab == 1 ? (<Contact />) : selectedTab == 2 ? (<Cart />) : selectedTab == 3 ? (<News />) : (<Profile />)}
+            {selectedTab == 0 ? (<Main2 addCart ={addCart} />) : selectedTab == 1 ? (<Contact />) : selectedTab == 2 ? (<Cart deleteCart ={deleteCart} />) : selectedTab == 3 ? (<News />) : (<Profile />)}
             <View style={{
                 width: '100%',
                 height: 50,
@@ -62,7 +93,8 @@ const Home = () => {
                             source={require('../images/shopping-cart.png')}
                             style={{ width: 24, height: 24, tintColor: '#fff' }}
                         />
-                        <View style={{
+                        {length>0 &&
+                            <View style={{
                             width:16,
                             height:16,
                             backgroundColor:'red',
@@ -73,8 +105,9 @@ const Home = () => {
                             top:5,
                             right:5,
                         }}>
-                            <Text style={{color:'#fff',fontWeight:'600',bottom:1,}}>{data.Reducers.length}</Text>
+                            <Text style={{color:'#fff',fontWeight:'600',bottom:1,}}>{length}</Text>
                         </View>
+                        }
                     </TouchableOpacity>
 
                 </View>

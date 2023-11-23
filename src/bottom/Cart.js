@@ -6,13 +6,13 @@ import { useSelector } from 'react-redux';
 const Cart = () => {
   const [cartList, setCartList] = useState([]);
   const cartData = useSelector(state => state.Reducers);
-  const getTotal = () => {
-    let tempTotal = 0;
-    cartData.map(item => {
-      tempTotal = tempTotal + item.price;
-    });
-    return tempTotal;
-  }
+  // const getTotal = () => {
+  //   let tempTotal = 0;
+  //   cartData.map(item => {
+  //     tempTotal = tempTotal + item.price;
+  //   });
+  //   return tempTotal;
+  // }
   return (
     <View style={{ flex: 1, flexDirection: 'column' }}>
       <View style={{
@@ -62,7 +62,9 @@ const Cart = () => {
           <Text style={{
             fontSize: 17,
             fontWeight: 'bold',
-          }}>Tổng: {getTotal() + '$'} </Text>
+          }}>Tổng: 
+          {/* {getTotal() + '$'}  */}
+          </Text>
           <Text
             style={{
               color: 'red',
