@@ -6,6 +6,7 @@ import Cart from "../bottom/Cart";
 import Profile from "../bottom/Profile";
 import { useSelector } from "react-redux";
 import News from "../bottom/News";
+import Main2 from "../bottom/Main2";
 
 
 const Home = () => {
@@ -15,7 +16,7 @@ const Home = () => {
 
     return (
         <View style={{ flex: 1 }}>
-            {selectedTab == 0 ? (<Main />) : selectedTab == 1 ? (<Contact />) : selectedTab == 2 ? (<Cart />) : selectedTab == 3 ? (<News />) : (<Profile />)}
+            {selectedTab == 0 ? (<Main2 />) : selectedTab == 1 ? (<Contact />) : selectedTab == 2 ? (<Cart />) : selectedTab == 3 ? (<News />) : (<Profile />)}
             <View style={{
                 width: '100%',
                 height: 50,

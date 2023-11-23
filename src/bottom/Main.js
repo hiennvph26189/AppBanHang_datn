@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart } from '../redux/actions/Actions';
 import axios from 'axios';
 import { API_GETCATEGORY, API_HOT_PRODUCTS, API_HOTSALE_PRODUCTS, API_NEW_PRODUCTS, API_PRODUCT_CATEGORY } from '../../API';
+// import {GETCATEGORIES, GETALLPRODUCTS} from '../../API';
 import ItemLuotMua from '../common/ItemLuotMua'
 
 const Main = () => {
