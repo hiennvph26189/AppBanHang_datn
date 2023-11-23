@@ -4,11 +4,12 @@ import { View, Text, Image, TextInput, Pressable, ToastAndroid } from 'react-nat
 import CustomTextInput from '../common/CustomTextInput';
 import CommonButton from '../common/CommonButton';
 import { LOGIN } from '../../API';
+import {updateEmail} from "../redux/actions/Actions";
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 
 const Login = () => {
-
+  
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassWord] = useState('');
@@ -17,6 +18,7 @@ const Login = () => {
   const [showPassWord1, setShowPass1] = useState(true);
   const [err, setError] = useState(false);
   const [errMessage, setErrorMessage] = useState('');
+  const info = useSelector((state)=> state.Reducers.arrUser)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -40,6 +42,7 @@ const Login = () => {
                 ToastAndroid.LONG,
                 ToastAndroid.BOTTOM, 10, 100,
               );
+              dispatch(updateEmail(res.data.user,true))
               navigation.navigate('Home');
             } else {
               alert("Tài khoản của bạn đã bị khóa")
