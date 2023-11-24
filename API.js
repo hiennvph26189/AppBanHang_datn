@@ -1,23 +1,31 @@
 export const URL = 'http://192.168.1.252:8080/';
 // export const URL = 'http://192.168.1.7:8080/';
-// export const LOGIN = URL + '';
-// export const REGISTER = URL +'';
-// export const API_GETCATEGORY = URL + 'app-list-category';
-// export const API_HOT_PRODUCTS = URL + 'app-list-hot-order-product';
-// export const API_HOTSALE_PRODUCTS = URL +'app-list-sale-order-product';
-// export const API_NEW_PRODUCTS = URL +'app-list-new-order-product';
-// export const API_PRODUCT_CATEGORY = URL+'app-list-product-by-category';
-// export const API_PRODUCTS = URL + '';
-// export const API_CART = URL + '';
+
+// login 
 export const LOGIN = URL+"api/login-member"
+// đăng ký
 export const ADDMENBER = URL+"api/add-member"
+//get profile member
 export const PROFILEMEMBER = URL+"api/profile-member"
+// get sản phẩm hot sale
+export const LIST_HOST_SALES_PRODUCTS = URL + "api-app/list-hot-sale-product"
+// List host order products app
+export const LIST_HOST_ODERS_PRODUCTS = URL + "api-app/list-hot-order-product"
+// list sản phẩm theo danh sách sản phẩm
+export const LIST_PRODUCTS_IN_CATEGORIES = URL + "api-app/list-category-in-products"
+//edit profile member
 export const EDITPROFILEMEMBER = URL+"api/edit-profile-member"
+//nap tien
 export const NAPTIENMEMBER = URL+"api/naptien-members"
+//get lịch sử nạp tiền
 export const LICHSUNAPTIENMEMBER = URL+"api/lich-su-naptien-members"
-export const GETCATEGORIES = URL+"api/get-all-categories"
-export const GETALLPRODUCTS = URL+"api/get-all-total-product"
+//get danh mục sản phẩm
+export const GET_CATEGORIES = URL+"api/get-all-categories"
+// get tất cả sản phẩm trong trang chủ
+export const GET_ALLPRODUCTS = URL+"api/get-all-total-product"
+//get one product
 export const GET_ONE_PRODUCT = URL+"api/get-one-product"
+// lấy ra sản phẩm trong giỏ hàng
 export const GETCARTUSER = URL+"api/user-carts-product"
 export const POSTCARTUSER = URL+"api/oders-product"
 export const DELETECARTUSER = URL+"api/delete-cart-product"

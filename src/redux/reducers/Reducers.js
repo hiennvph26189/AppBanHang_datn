@@ -1,11 +1,12 @@
-import { ADD_TO_CART, ADD_TO_WISHLIST,FECTH_CATEGORIES,CAP_NHAT_EMAIL, REMOVE_FORM_CART, REMOVE_FORM_WISHLIST } from "../ActionTypes";
+import { ADD_TO_CART, ADD_TO_WISHLIST,FECTH_CATEGORIES,CAP_NHAT_EMAIL, REMOVE_FORM_CART, REMOVE_FORM_WISHLIST, LOGIN, LOGOUT } from "../ActionTypes";
 import actionTypes from '../action/actionTypes';
 import React, { useState } from "react";
 const initState = {
     arrUser: [],
     arrCart: [],
     categoties: [],
-    isloading:false
+    isloading:false,
+    isLoggedIn: false
 }
 export const Reducers = (state = initState, action) => {
  
@@ -47,6 +48,19 @@ export const Reducers = (state = initState, action) => {
             //     return index !== action.payloads;
             // });
         // return {...state};
+        case LOGIN:
+            return {
+                ...state,
+                isLoggedIn: true,
+                // Các cập nhật khác nếu cần
+            };
+        
+        case LOGOUT:
+            return {
+                ...state,
+                isLoggedIn: false,
+                // Các cập nhật khác nếu cần
+            }
          
         default:
             return state;

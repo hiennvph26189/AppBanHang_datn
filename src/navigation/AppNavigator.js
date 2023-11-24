@@ -12,6 +12,7 @@ import Main from '../bottom/Main';
 import EditProfile from '../common/EditProfile';
 import RePass from '../edit/RePass';
 import HistoryBuy from '../edit/HistoryBuy';
+import NewsPaperDetail from '../edit/NewsPaperDetail';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +29,7 @@ const AppNavigator = () => {
                 <Stack.Screen options={{headerShown: false }} name='Editprofile' component={EditProfile}/>
                 <Stack.Screen options={{headerShown: false }} name='RePasswd' component={RePass}/>
                 <Stack.Screen options={{headerShown: false }} name='History' component={HistoryBuy}/>
+                <Stack.Screen options={{headerShown: false }} name='NewsDetail' component={NewsPaperDetail}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

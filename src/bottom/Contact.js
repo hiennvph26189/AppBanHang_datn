@@ -1,35 +1,33 @@
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Button, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
+import MapView, { Marker } from "react-native-maps";
+import CustomTextInput from "../common/CustomTextInput";
+import CommonButton from "../common/CommonButton";
 const Contact = () => {
   return (
-    <View style={{ flex: 1, marginBottom: 40, }}>
-      <ScrollView>
-        <Image source={require('../images/shop.jpg')}
-          style={{
-            width: '94%',
-            height: 200,
-            borderRadius: 10,
-            alignSelf: 'center',
-            marginTop: 10,
-          }} />
+    <View style={{ flex: 1 }}>
+      <View style={{ height: '50%', padding: 10, }}>
+        <MapView style={{ flex: 1, height: '50%' }}
+          initialRegion={{
+            latitude: 20.9999531,
+            longitude: 105.8046858,
+            latitudeDelta: 0.03,
+            longitudeDelta: 0.03,
+          }}>
+          <Marker
+            coordinate={{ latitude: 20.9999531, longitude: 105.8046858 }}
+            title="Marker Title"
+            description="Marker Description"
+          />
+        </MapView>
+      </View>
+      <ScrollView style={{marginBottom:50}}>
 
         <View style={{
           paddingHorizontal: 16,
           marginTop: 6
-
         }}>
-          <View style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-          }}>
-            <Image source={require('../images/shopping-cart.png')} style={{ width: 24, height: 24 }}></Image>
-            <Text style={{
-              fontSize: 16,
-              fontWeight: '400',
-              marginLeft: 20
-            }}>Shopping Fashion Men</Text>
 
-          </View>
           <View style={{
             flexDirection: 'row',
             marginVertical: 4,
@@ -49,9 +47,8 @@ const Contact = () => {
           </View>
 
           <Text style={{ fontSize: 12, fontWeight: '400', letterSpacing: 1, opacity: 0.5, lineHeight: 20, maxWidth: '85%', maxHeight: 44, marginBottom: 18 }}>
-            Khi Bạn Gặp Bất Cứ Sự Cố gì hãy liên hệ với Chúng tôi Qua các phương thức bên dưới
+            Khi Bạn Gặp Bất Cứ Sự Cố gì hãy liên hệ với Chúng tôi Qua các phương thức bên dưới </Text>
 
-          </Text>
           <View style={{
             padding: 10,
             borderRadius: 20,
@@ -101,7 +98,7 @@ const Contact = () => {
           <View style={{
             padding: 10,
             borderRadius: 20,
-            flexDirection: 'row',
+            // flexDirection:'row',
             alignItems: 'center',
             justifyContent: 'space-between',
             marginVertical: 14,
@@ -116,14 +113,14 @@ const Contact = () => {
               <View style={{ alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 100, marginRight: 10, backgroundColor: '#D3D3D3' }}>
                 <Image source={require('../images/email.png')} style={{ width: 24, height: 24 }}></Image>
               </View>
-              <Text>fatdinasours@gmail.com</Text>
-
+              <Text>Gửi phản hồi đến chúng tôi</Text>
             </View>
-            <Image source={require('../images/next.png')} style={{ width: 12, height: 12 }}></Image>
+            <CustomTextInput placeholder={'Ý kiến'}/>
+            
           </View>
 
           <View style={{
-            paddingHorizontal: 16
+            paddingHorizontal: 16,
           }}>
             <Text style={{
               fontSize: 18,
@@ -132,23 +129,12 @@ const Contact = () => {
             }}>
               Cảm Ơn Bạn Đã Tin Tưởng Chúng Tôi
             </Text>
-            <Text>
-              - Đội Ngũ Shop
+            <Text style={{alignSelf:'center'}}>
+               Đội Ngũ Shop
             </Text>
           </View>
         </View>
       </ScrollView>
-      <View style={{ backgroundColor: '#555555', height: 100, borderRadius: 20, margin: 10, paddingHorizontal: 10, paddingVertical: 20 }}>
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-          <Image source={require('../images/fb.png')} style={{ width: 40, height: 40 }}>
-          </Image>
-          <Text style={{ color: '#fff', marginLeft: 10, fontSize: 15, fontWeight: '600', marginTop: 10 }}>TNguyen Store</Text>
-          <Image source={require('../images/instagram.png')} style={{ width: 40, height: 40, marginLeft: 40 }}>
-          </Image>
-          <Text style={{ color: '#fff', marginLeft: 10, fontSize: 15, fontWeight: '600', marginTop: 10 }}>@Nguyendz102</Text>
-        </View>
-
-      </View>
 
     </View>
   );

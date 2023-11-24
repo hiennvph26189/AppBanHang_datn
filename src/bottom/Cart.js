@@ -3,16 +3,10 @@ import React, { useState } from 'react'
 import CartItem from '../common/CartItem';
 import { useSelector } from 'react-redux';
 
-const Cart = () => {
+const Cart = (props) => {
   const [cartList, setCartList] = useState([]);
   const cartData = useSelector(state => state.Reducers);
-  // const getTotal = () => {
-  //   let tempTotal = 0;
-  //   cartData.map(item => {
-  //     tempTotal = tempTotal + item.price;
-  //   });
-  //   return tempTotal;
-  // }
+
   return (
     <View style={{ flex: 1, flexDirection: 'column' }}>
       <View style={{

@@ -31,7 +31,7 @@ const Home = (props) => {
                     
                 }
             })
-
+            console.log(info.id+"ALLL");
         }
         setLenght(count)  
     }
@@ -47,7 +47,7 @@ const Home = (props) => {
     }, [isFocused])
     return (
         <View style={{ flex: 1 }}>
-            {selectedTab == 0 ? (<Main2 addCart ={addCart} />) : selectedTab == 1 ? (<Contact />) : selectedTab == 2 ? (<Cart deleteCart ={deleteCart} />) : selectedTab == 3 ? (<News />) : (<Profile />)}
+            {selectedTab == 0 ? (<Main addCart ={addCart} />) : selectedTab == 1 ? (<Contact />) : selectedTab == 2 ? (<Cart deleteCart ={deleteCart} />) : selectedTab == 3 ? (<News />) : (<Profile />)}
             <View style={{
                 width: '100%',
                 height: 50,
