@@ -5,6 +5,7 @@ import moment from 'moment';
 import fr from "moment/locale/fr";
 import { ScrollView } from 'react-native-gesture-handler';
 import Header from '../common/Header';
+import CustomHeader from '../common/CustomHeader';
 const NewsPaperDetail = (props) => {
 
   const WIDTH = Dimensions.get('window').width;
@@ -21,7 +22,7 @@ const NewsPaperDetail = (props) => {
   }
   return (
     <>
-    <Header 
+    <CustomHeader 
     title={'Thông tin chi tiết'}
     />
     <ScrollView style={{ paddingTop: 10 }}>

@@ -4,6 +4,7 @@ import Header from '../common/Header';
 import CustomTextInput from '../common/CustomTextInput';
 import CommonButton from '../common/CommonButton';
 import { Avatar } from 'react-native-paper';
+import CustomHeader from '../common/CustomHeader';
 
 
 
@@ -35,7 +36,7 @@ const RePass = () => {
         setShowPass2(!showPassWord2)
 
     }
-    const validate =() =>{
+    const validate = () => {
         if (password) {
             setBadPasswd(false)
         } else {
@@ -44,9 +45,9 @@ const RePass = () => {
             return
         }
         if (repasswd) {
-            setBadRePasswd(false)
-        }else{
-            setBadRePasswd(true)
+            setBadPasswd1(false)
+        } else {
+            setBadPasswd1(true)
             setErrorMessage("Vui lòng nhập mật khẩu muốn đổi")
             return
         }
@@ -67,18 +68,18 @@ const RePass = () => {
 
     return (
         <>
-            <Header
+            <CustomHeader
                 title={'Đổi mật khẩu'} />
-                <View style ={{justifyContent:'center',alignSelf:'center'}}>
+            <View style={{ justifyContent: 'center', alignSelf: 'center' }}>
                 <Avatar.Image
-                
-                source={{
-                    uri: profile.anhDaiDien ? profile.anhDaiDien : 'https://tse4.mm.bing.net/th?id=OIP.eImXLrEHmxuAIYAz3_VKhAHaHt&pid=Api&P=0'
 
-                }}
-                size={100}
-            />
-                </View>
+                    source={{
+                        uri: profile.anhDaiDien ? profile.anhDaiDien : 'https://tse4.mm.bing.net/th?id=OIP.eImXLrEHmxuAIYAz3_VKhAHaHt&pid=Api&P=0'
+
+                    }}
+                    size={100}
+                />
+            </View>
             <View>
                 <View style={{ position: 'relative' }} >
                     <CustomTextInput
@@ -100,6 +101,9 @@ const RePass = () => {
                                 source={require('../images/hidden.png')}
                             />}
                     </Pressable>
+                    {
+                        badPasswd == true && (<Text style={{ marginTop: 10, marginLeft: 40, color: 'red' }}>{errMessage}</Text>)
+                    }
                 </View>
             </View>
             <View>
@@ -123,6 +127,9 @@ const RePass = () => {
                                 source={require('../images/hidden.png')}
                             />}
                     </Pressable>
+                    {
+                        BadPasswd1 == true && (<Text style={{ marginTop: 10, marginLeft: 40, color: 'red' }}>{errMessage}</Text>)
+                    }
                 </View>
             </View>
             <View>
@@ -153,12 +160,12 @@ const RePass = () => {
                     badConfirmPassword == true && (<Text style={{ marginTop: 10, marginLeft: 40, color: 'red' }}>{errMessage}</Text>)
                 }
             </View>
-            <CommonButton 
-            title={'Đổi mật khẩu'}
-            bgColor={'#000'}
-            textColor={'#fff'}
-            onPress={()=>{validate()}}/>
-                
+            <CommonButton
+                title={'Đổi mật khẩu'}
+                bgColor={'#000'}
+                textColor={'#fff'}
+                onPress={() => { validate() }} />
+
         </>
     );
 };

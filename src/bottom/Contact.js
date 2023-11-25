@@ -1,13 +1,15 @@
-import { Button, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import { Button, Dimensions, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
 import MapView, { Marker } from "react-native-maps";
 import CustomTextInput from "../common/CustomTextInput";
 import CommonButton from "../common/CommonButton";
 const Contact = () => {
+  const WIDTH = Dimensions.get('window').width;
+  const [feedBack, setFeedBack] = useState('')
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ height: '50%', padding: 10, }}>
-        <MapView style={{ flex: 1, height: '50%' }}
+      <View style={{ height: '30%', padding: 10, WIDTH }}>
+        <MapView style={{ flex: 1, height: '30%' }}
           initialRegion={{
             latitude: 20.9999531,
             longitude: 105.8046858,
@@ -21,7 +23,7 @@ const Contact = () => {
           />
         </MapView>
       </View>
-      <ScrollView style={{marginBottom:50}}>
+      <ScrollView style={{ marginBottom: 50 }}>
 
         <View style={{
           paddingHorizontal: 16,
@@ -115,8 +117,11 @@ const Contact = () => {
               </View>
               <Text>Gửi phản hồi đến chúng tôi</Text>
             </View>
-            <CustomTextInput placeholder={'Ý kiến'}/>
-            
+            <CustomTextInput
+              placeholder={'Phản hồi'}
+              value={feedBack}
+              onChangeText={text => { setFeedBack(text); }} />
+
           </View>
 
           <View style={{
@@ -129,8 +134,8 @@ const Contact = () => {
             }}>
               Cảm Ơn Bạn Đã Tin Tưởng Chúng Tôi
             </Text>
-            <Text style={{alignSelf:'center'}}>
-               Đội Ngũ Shop
+            <Text style={{ alignSelf: 'center' }}>
+              Đội Ngũ Shop
             </Text>
           </View>
         </View>

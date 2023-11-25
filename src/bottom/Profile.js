@@ -57,7 +57,9 @@ const Profile = () => {
     }
 
     return (
-        <SafeAreaView style={styles.container}>
+        <>
+        {info.id>0 ? 
+            <SafeAreaView style={styles.container}>
             <Header
                 title={'Profile'}
                 show={true}
@@ -208,6 +210,10 @@ const Profile = () => {
                 </View>
             </ScrollView>
         </SafeAreaView>
+    :<Text>OK</Text>   
+    }
+        
+        </>
     );
 };
 
