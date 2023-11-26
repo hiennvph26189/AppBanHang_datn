@@ -1,6 +1,13 @@
-import { View,Text,Image,TouchableOpacity,StyleSheet,SafeAreaView, Dimensions,ScrollView, } from 'react-native'
+import { View,Text,Image,TouchableOpacity,StyleSheet,SafeAreaView, Dimensions,ScrollView,useWindowDimensions } from 'react-native'
 import React, { useState } from 'react'
 import { FontAwesome } from '@expo/vector-icons';
+import { GET_CATEGORIES,POSTCARTUSER,GET_ONE_PRODUCT } from '../../API';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useEffect } from 'react';
+import CustomHeader from '../common/CustomHeader';
+import RenderHTML from 'react-native-render-html';
 
 
 const images = [
@@ -13,12 +20,82 @@ const images = [
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
-const ProductDetail = () => {
+const ProductDetail = (props) => {
 
+    const isFocused = useIsFocused();
+    const navigation = useNavigation();
+    const route = props.route;
+    let idProduct = route.params.id;
+    const {width} = useWindowDimensions();
+    const info = useSelector(state => state.Reducers.arrUser);
     const [imgActive, setImgActive] = useState(0);
+    const [detailProduct, setDetailProduct] = useState({});
+    const [ortherProducrs, setOrtherProducrs] = useState([]);
+    const [categoryList, setCategoryList] = useState([]);
+    const[images, setImages] = useState([]);
     const [size,setSize] = useState("");
     const [soLuong,setSoLuong] = useState(0);
+
+    onRefresh=()=>{
+        getDetailProduct();
+        loadCategory();
+    }
+    const getDetailProduct = async() =>{
+        if(idProduct){
+            await axios.get(`${GET_ONE_PRODUCT}?id=${idProduct}`).then((res)=>{
+                if(res.data.errCode === 0){
+                    setDetailProduct(res.data.getDetailProduct)
+                    setImages(JSON.parse(res.data.getDetailProduct.image))
+                    setOrtherProducrs(res.data.arProduct)
+                    console.log(JSON.parse(res.data.getDetailProduct.image))
+                }
+            })
+        }
+    }
+    const loadCategory = async()=>{
+        await axios.get(GET_CATEGORIES).then((res)=>{
+            if (res && res.data.errCode ===0) {
+                setCategoryList(res.data.data);
+            }
+        }).catch((error)=>{
+            console.log(error);
+        });
+    }
+
+    useEffect (()=>{
+        getDetailProduct();
+        loadCategory();
+    },[isFocused])
+
+    price =(price)=>{
+        if(price){
+            let x = price;
+            x = x.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
+            return  x;
+        }
+    }
+
+    getCategory = (id)=>{
+        let name = ""
+        if(id&&categoryList){
+            categoryList.map((item)=>{
+                if(id == item.id){
+                   name = item.name
+                    
+                }
+            })
+        }
+        return name;
+    }
+    const source = {
+        html: `${detailProduct.mota}`
+      };
+
     return (
+        <>
+        <CustomHeader
+        title={'Chi tiết sản phẩm'}
+        />
         <View style={{backgroundColor:"#fff"}}>
             <ScrollView>
                 <SafeAreaView>
@@ -38,7 +115,7 @@ const ProductDetail = () => {
                                 marginLeft: 2,
                                 fontWeight: 'bold',
                                 fontSize: 16,
-                            }}>Tên sản phẩm</Text>
+                            }}>{detailProduct?detailProduct.tenSp:""}</Text>
                            
                         </View>
                         <ScrollView
@@ -67,7 +144,7 @@ const ProductDetail = () => {
                         </View>
                     </View>
                     <View style={{justifyContent:'space-between',flexDirection:"row", alignItems:"center", padding:5}}>
-                    {/* {detailProduct&&detailProduct.sale>0? */}
+                    {detailProduct&&detailProduct.sale>0?
                     <>
                         <View style={{ flexDirection: 'row', marginLeft:2,alignItems:"center" , paddingTop:10,paddingBottom:10}}>
                         
@@ -79,8 +156,7 @@ const ProductDetail = () => {
                             fontSize: 20,
                             textDecorationLine: 'line-through'
                         }}>
-                           {/* {price(detailProduct.giaSanPham) } */}
-                           350.000
+                           {price(detailProduct.giaSanPham) }
                            </Text>
                         <Text style={{fontSize:20, marginLeft:5, marginRight:5}}>-</Text>
                         <Text style={{
@@ -91,12 +167,11 @@ const ProductDetail = () => {
                             fontSize: 20,
                             marginRight: 10,
                         }}>
-                          315.000 đ
-                          {/* {price(detailProduct.giaSanPham-(detailProduct.giaSanPham *(detailProduct. sale/100)) ) } */}
+                          {price(detailProduct.giaSanPham-(detailProduct.giaSanPham *(detailProduct. sale/100)) ) }
                           </Text>
                     </View>
                     </>
-                    {/* : */}
+                    :
                     <View style={{ flexDirection: 'row', marginLeft:2,marginTop:15 }}>
                         <Text style={{
                             
@@ -106,17 +181,15 @@ const ProductDetail = () => {
                             fontSize: 20,
                             marginRight: 10,
                         }}>
-                          {/* {price(detailProduct.giaSanPham)} */}
-                          gia chi tiet
+                          {price(detailProduct.giaSanPham)}
                           </Text>
                         
                     </View>
   
-                {/* // } */}
+                 }
                     <View style={{marginRight:20}}>
                         <Text >
-                          {/* (đã bán: {detailProduct.luotMua}) */}
-                          đã bán:
+                          (đã bán: {detailProduct.luotMua})
                           </Text>
                     </View>
                     </View>
@@ -292,39 +365,39 @@ const ProductDetail = () => {
                     }}>
                         <Text>
                             Tên mẫu áo: 
-                            {/* {detailProduct?detailProduct.tenSp:""} */}
+                            {detailProduct?detailProduct.tenSp:""}
                         </Text>
                         <Text>
                             Hãng sản xuất: 
-                            {/* {detailProduct?detailProduct.hangSx:""} */}
+                            {detailProduct?detailProduct.hangSx:""}
                         </Text>
                         <Text>
                             Danh mục: 
-                            {/* {getCategory(detailProduct?detailProduct.idDanhSach:"")} */}
+                            {getCategory(detailProduct?detailProduct.idDanhSach:"")}
                         </Text>
                         <Text>
                            Số lượng: 
-                           {/* {detailProduct.soLuong} */}
+                           {detailProduct.soLuong}
                         </Text>
                         <Text>
                            Giá gốc: 
-                           {/* {price(detailProduct.giaSanPham)} */}
+                           {price(detailProduct.giaSanPham)}
   
                         </Text>
                         <Text>
                            Sale: 
-                           {/* {detailProduct.sale}% */}
+                           {detailProduct.sale}%
                            
                         </Text>
                         <View style={{marginTop: 5}}>
                         <Text style={{fontSize:17, fontWeight:"700"}}>
                             Đánh giá sản phẩm:
                         </Text>
-                        {/* <RenderHtml
+                        <RenderHTML
                             contentWidth={width}
                             source={source}
                            
-                            /> */}
+                            />
                         </View>
   
                        
@@ -358,6 +431,7 @@ const ProductDetail = () => {
                 </SafeAreaView>
             </ScrollView>
         </View>
+        </>
     )
 };
 

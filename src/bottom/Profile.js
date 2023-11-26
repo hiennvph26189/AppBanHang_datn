@@ -210,7 +210,9 @@ const Profile = () => {
                 </View>
             </ScrollView>
         </SafeAreaView>
-    :<Text>OK</Text>   
+    : <View>
+        <Text> OK </Text> 
+    </View>
     }
         
         </>
