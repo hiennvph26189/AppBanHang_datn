@@ -1,15 +1,42 @@
-import { Button, Dimensions, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Button, Dimensions, Image, ScrollView, Text, TextInput, TouchableOpacity, View, Alert } from "react-native";
 import React, { useState } from "react";
 import MapView, { Marker } from "react-native-maps";
 import CustomTextInput from "../common/CustomTextInput";
 import CommonButton from "../common/CommonButton";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import axios from "axios";
+import { FEED_BACK } from "../../API";
+
 const Contact = () => {
   const WIDTH = Dimensions.get('window').width;
-  const [feedBack, setFeedBack] = useState('')
+  const [feedBack, setFeedBack] = useState('');
+
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const [contact, setContact] = useState('');
+
+  const onFeedBack = () => {
+    const data ={
+      name: name,
+      email: email,
+      contact: contact
+    }
+    axios.post(FEED_BACK,data).then((res) => {
+      if (res.data.errCode === 1) {
+        Alert.alert(
+          'Thông báo',
+          `${res.data.errMessage}`,
+          [{ text: 'OK', onPress: () => console.log(res.data.errMessage) }],
+          { cancelable: false }
+        );
+      }
+    }).catch((err) => { console.log(err) })
+  }
+
   return (
-    <View style={{ flex: 1 }}>
-      <View style={{ height: '30%', padding: 10, WIDTH }}>
-        <MapView style={{ flex: 1, height: '30%' }}
+    <ScrollView style={{ flexGrow: 1, flex: 1, marginBottom: 10 }}>
+      <View style={{ height: 300, padding: 6, WIDTH }}>
+        <MapView style={{ flex: 1, height: 200 }}
           initialRegion={{
             latitude: 20.9999531,
             longitude: 105.8046858,
@@ -23,125 +50,151 @@ const Contact = () => {
           />
         </MapView>
       </View>
-      <ScrollView style={{ marginBottom: 50 }}>
-
-        <View style={{
-          paddingHorizontal: 16,
-          marginTop: 6
+      <View style={{ marginBottom: 50, marginTop: 10, marginHorizontal: 8 }}>
+        <Image
+          source={require('../images/logo.png')}
+          style={{ width: 150, height: 100 }}
+        />
+        <Text style={{
+          alignContent: 'center',
+          fontSize: 17,
+          marginTop: 10,
+          marginBottom: 10,
+          alignSelf: 'center'
         }}>
-
+          Sapo được thành lập với niềm đam mê và khát vọng thành công trong lĩnh vực Thương mại điện tử. Chúng tôi đã và đang khẳng định được vị trí hàng đầu bằng những sản phẩm.
+        </Text>
+        <View style={{
+          padding: 8,
+          borderRadius: 20,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginVertical: 4,
+          borderBottomWidth: 1,
+          backgroundColor: '#e6e6e6',
+          marginHorizontal: 2,
+        }}>
           <View style={{
             flexDirection: 'row',
-            marginVertical: 4,
-            alignItems: 'center',
-            justifyContent: 'space-between'
+            width: '80%',
+            alignItems: 'center'
           }}>
-            <Text style={{
-              fontSize: 24,
-              fontWeight: '600',
-              letterSpacing: 0.5,
-              marginVertical: 4,
-              maxWidth: '84%'
-            }}>Liên Hệ Với Chúng Tôi</Text>
-            <View style={{ width: 30, height: 30, backgroundColor: "#4da6ff", borderRadius: 100 }}>
-              <Image source={require('../images/link.png')} style={{ width: 15, height: 15, margin: 8 }}></Image>
+            <View style={{ alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 100, marginRight: 10, backgroundColor: '#66a182' }}>
+              <Icon name="map-marker" size={25} color='#fff' />
             </View>
-          </View>
+            <Text>Tầng 6 266 Đội Cấn - Ba Đình - Hà Nội, Hà Nội</Text>
 
-          <Text style={{ fontSize: 12, fontWeight: '400', letterSpacing: 1, opacity: 0.5, lineHeight: 20, maxWidth: '85%', maxHeight: 44, marginBottom: 18 }}>
-            Khi Bạn Gặp Bất Cứ Sự Cố gì hãy liên hệ với Chúng tôi Qua các phương thức bên dưới </Text>
-
-          <View style={{
-            padding: 10,
-            borderRadius: 20,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginVertical: 14,
-            borderBottomWidth: 1,
-            backgroundColor: '#e6e6e6'
-          }}>
-            <TouchableOpacity style={{
-              flexDirection: 'row',
-              width: '80%',
-              alignItems: 'center'
-            }}>
-              <View style={{ alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 100, marginRight: 10, backgroundColor: '#D3D3D3' }}>
-                <Image source={require('../images/address.png')} style={{ width: 24, height: 24 }}></Image>
-              </View>
-              <Text>số 81 - Ngõ 32 - Đỗ Đức Dục - Nam Từ Liêm - Hà Nội</Text>
-
-            </TouchableOpacity>
-            <Image source={require('../images/next.png')} style={{ width: 12, height: 12 }}></Image>
-          </View>
-          <View style={{
-            padding: 10,
-            borderRadius: 20,
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginVertical: 14,
-            borderBottomWidth: 1,
-            backgroundColor: '#e6e6e6'
-          }}>
-            <View style={{
-              flexDirection: 'row',
-              width: '80%',
-              alignItems: 'center'
-            }}>
-              <View style={{ alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 100, marginRight: 10, backgroundColor: '#D3D3D3' }}>
-                <Image source={require('../images/phone.png')} style={{ width: 24, height: 24 }}></Image>
-              </View>
-              <Text>0987654321</Text>
-
-            </View>
-            <Image source={require('../images/next.png')} style={{ width: 12, height: 12 }}></Image>
-          </View>
-          <View style={{
-            padding: 10,
-            borderRadius: 20,
-            // flexDirection:'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginVertical: 14,
-            borderBottomWidth: 1,
-            backgroundColor: '#e6e6e6'
-          }}>
-            <View style={{
-              flexDirection: 'row',
-              width: '80%',
-              alignItems: 'center'
-            }}>
-              <View style={{ alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 100, marginRight: 10, backgroundColor: '#D3D3D3' }}>
-                <Image source={require('../images/email.png')} style={{ width: 24, height: 24 }}></Image>
-              </View>
-              <Text>Gửi phản hồi đến chúng tôi</Text>
-            </View>
-            <CustomTextInput
-              placeholder={'Phản hồi'}
-              value={feedBack}
-              onChangeText={text => { setFeedBack(text); }} />
-
-          </View>
-
-          <View style={{
-            paddingHorizontal: 16,
-          }}>
-            <Text style={{
-              fontSize: 18,
-              fontWeight: '500',
-              marginBottom: 4
-            }}>
-              Cảm Ơn Bạn Đã Tin Tưởng Chúng Tôi
-            </Text>
-            <Text style={{ alignSelf: 'center' }}>
-              Đội Ngũ Shop
-            </Text>
           </View>
         </View>
-      </ScrollView>
+        <View style={{
+          padding: 8,
+          borderRadius: 20,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          marginVertical: 4,
+          borderBottomWidth: 1,
+          backgroundColor: '#e6e6e6',
+          marginHorizontal: 2,
+        }}>
+          <View style={{
+            flexDirection: 'row',
+            width: '80%',
+            alignItems: 'center'
+          }}>
+            <View style={{ alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 100, marginRight: 10, backgroundColor: '#66a182' }}>
+              <Icon name="phone-classic" size={25} color='#fff' />
+            </View>
+            <Text>1900 6750</Text>
+          </View>
+        </View>
+        <View style={{
+          padding: 8,
+          borderRadius: 20,
+          flexDirection: 'row',
+          alignItems: 'center',
+          marginVertical: 4,
+          justifyContent: 'space-between',
+          borderBottomWidth: 1,
+          backgroundColor: '#e6e6e6',
+          marginHorizontal: 2,
+        }}>
+          <View style={{
+            flexDirection: 'row',
+            width: '80%',
+            alignItems: 'center'
+          }}>
+            <View style={{ alignItems: 'center', justifyContent: 'center', padding: 12, borderRadius: 100, marginRight: 10, backgroundColor: '#66a182' }}>
+              <Icon name="email-outline" size={25} color='#fff' />
+            </View>
+            <Text>Hellocafein@gmail.com</Text>
+          </View>
+        </View>
+        <View>
+          <Text style={{ fontSize: 25, fontWeight: '700', marginTop: 10 }}>
+            LIÊN HỆ
+          </Text>
+          <View style={{ marginHorizontal: 4, backgroundColor: '#e6e6e6', marginTop: 10 }}>
+            <Text style={{ marginVertical: 5, marginLeft: 20, fontSize: 16, opacity: 0.5 }}>Họ và tên:</Text>
+            <TextInput
+              multiline={true} style={{
+                height: 45,
+                fontSize: 18,
+                padding: 8,
+                flexDirection: 'row',
+                borderBottomWidth: 1,
+                backgroundColor: '#e6e6e6',
+                borderRadius: 20,
+              }} />
+          </View>
+          <View style={{ marginHorizontal: 4, backgroundColor: '#e6e6e6', marginTop: 10 }}>
+            <Text style={{ marginVertical: 5, marginLeft: 20, fontSize: 16, opacity: 0.5 }}>Email:</Text>
+            <TextInput
+              multiline={true} style={{
+                height: 45,
+                fontSize: 18,
+                padding: 8,
+                flexDirection: 'row',
+                borderBottomWidth: 1,
+                backgroundColor: '#e6e6e6',
+                borderRadius: 20,
+              }} />
+          </View>
+          <View style={{ marginHorizontal: 4, backgroundColor: '#e6e6e6', marginTop: 10 }}>
+            <Text style={{ marginVertical: 5, marginLeft: 20, fontSize: 16, opacity: 0.5 }}>Phản hồi:</Text>
+            <TextInput
+              multiline={true} style={{
+                height: 120,
+                fontSize: 16,
+                padding: 10,
+                flexDirection: 'row',
+                borderBottomWidth: 1,
+                backgroundColor: '#e6e6e6',
+                borderRadius: 20,
+              }} />
+          </View>
+          <TouchableOpacity 
+          // onPress={()=>{onFeedBack()}}
+          style={{
+            backgroundColor: 'black',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '85%',
+            height: 50,
+            borderRadius: 20,
+            alignSelf: 'center',
+            marginTop: 10,
+          }}>
+            <Text style={{
+              color: 'white',
+              fontWeight: '700'
+            }}>Gửi phản hồi</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
 
-    </View>
+    </ScrollView>
   );
 };
 export default Contact;
