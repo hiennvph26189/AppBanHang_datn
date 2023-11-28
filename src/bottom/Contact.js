@@ -1,8 +1,9 @@
 import { Button, Dimensions, Image, ScrollView, Text, TextInput, TouchableOpacity, View, Alert } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MapView, { Marker } from "react-native-maps";
 import CustomTextInput from "../common/CustomTextInput";
 import CommonButton from "../common/CommonButton";
+import { useDispatch, useSelector } from 'react-redux'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
 import { FEED_BACK } from "../../API";
@@ -11,17 +12,20 @@ const Contact = () => {
   const WIDTH = Dimensions.get('window').width;
   const [feedBack, setFeedBack] = useState('');
 
+  const info = useSelector(state => state.Reducers.arrUser);
+
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
 
   const onFeedBack = () => {
-    const data ={
+
+    const data = {
       name: name,
       email: email,
       contact: contact
     }
-    axios.post(FEED_BACK,data).then((res) => {
+    axios.post(FEED_BACK, data).then((res) => {
       if (res.data.errCode === 1) {
         Alert.alert(
           'Thông báo',
@@ -29,9 +33,19 @@ const Contact = () => {
           [{ text: 'OK', onPress: () => console.log(res.data.errMessage) }],
           { cancelable: false }
         );
+        setName('');
+        setEmail('');
+        setContact('');
       }
     }).catch((err) => { console.log(err) })
   }
+  useEffect(() => {
+    if (info) {
+      setEmail(info.email);
+      setName(info.tenThanhVien);
+    }
+    console.log(info);
+  }, [])
 
   return (
     <ScrollView style={{ flexGrow: 1, flex: 1, marginBottom: 10 }}>
@@ -136,30 +150,36 @@ const Contact = () => {
             LIÊN HỆ
           </Text>
           <View style={{ marginHorizontal: 4, backgroundColor: '#e6e6e6', marginTop: 10 }}>
-            <Text style={{ marginVertical: 5, marginLeft: 20, fontSize: 16, opacity: 0.5 }}>Họ và tên:</Text>
             <TextInput
-              multiline={true} style={{
-                height: 45,
+              multiline={true}
+              placeholder="Họ và tên"
+               style={{
+                height: 60,
                 fontSize: 18,
                 padding: 8,
                 flexDirection: 'row',
                 borderBottomWidth: 1,
                 backgroundColor: '#e6e6e6',
                 borderRadius: 20,
-              }} />
+              }}
+              value={name}
+              onChangeText={(text) => setName(text)}
+            />
           </View>
           <View style={{ marginHorizontal: 4, backgroundColor: '#e6e6e6', marginTop: 10 }}>
-            <Text style={{ marginVertical: 5, marginLeft: 20, fontSize: 16, opacity: 0.5 }}>Email:</Text>
             <TextInput
+            placeholder="Email"
               multiline={true} style={{
-                height: 45,
+                height: 60,
                 fontSize: 18,
                 padding: 8,
                 flexDirection: 'row',
                 borderBottomWidth: 1,
                 backgroundColor: '#e6e6e6',
                 borderRadius: 20,
-              }} />
+              }}
+              value={email}
+              onChangeText={(text) => setEmail(text)} />
           </View>
           <View style={{ marginHorizontal: 4, backgroundColor: '#e6e6e6', marginTop: 10 }}>
             <Text style={{ marginVertical: 5, marginLeft: 20, fontSize: 16, opacity: 0.5 }}>Phản hồi:</Text>
@@ -172,20 +192,23 @@ const Contact = () => {
                 borderBottomWidth: 1,
                 backgroundColor: '#e6e6e6',
                 borderRadius: 20,
-              }} />
+              }}
+              value={contact}
+              onChangeText={(text) => setContact(text)}
+            />
           </View>
-          <TouchableOpacity 
-          // onPress={()=>{onFeedBack()}}
-          style={{
-            backgroundColor: 'black',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '85%',
-            height: 50,
-            borderRadius: 20,
-            alignSelf: 'center',
-            marginTop: 10,
-          }}>
+          <TouchableOpacity
+            onPress={() => { onFeedBack() }}
+            style={{
+              backgroundColor: 'black',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '85%',
+              height: 50,
+              borderRadius: 20,
+              alignSelf: 'center',
+              marginTop: 10,
+            }}>
             <Text style={{
               color: 'white',
               fontWeight: '700'

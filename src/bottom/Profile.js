@@ -14,7 +14,7 @@ import CustomTextInput from "../common/CustomTextInput";
 import { updateEmail } from "../redux/actions/Actions";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const Profile = () => {
+const Profile = (props) => {
 
     // khác
     const navigation = useNavigation();
@@ -48,7 +48,7 @@ const Profile = () => {
     // logout
     const singOut = () => {
         dispatch(updateEmail({},false))
-        navigation.navigate('Home');
+        props.setSelectedTab1()
         
     }
 
