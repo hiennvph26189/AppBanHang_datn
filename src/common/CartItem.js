@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { View, Text, TouchableOpacity, ImageResizeMode, StyleSheet } from 'react-native'
 import React from 'react'
 
 const CartItem = ({item}) => {
@@ -60,3 +60,17 @@ const CartItem = ({item}) => {
 };
 
 export default CartItem;
+const styles = StyleSheet.create({
+    size:{
+    
+     padding:10,
+     borderColor:"#000",
+     borderWidth:1,
+     borderRadius:3,
+     marginRight: 2
+    },
+ textSize:{
+     fontSize:11,
+     textAlign: "center"
+ }
+ })

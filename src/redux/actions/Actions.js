@@ -1,4 +1,4 @@
-import { ADD_TO_CART, ADD_TO_WISHLIST, REMOVE_FORM_CART, REMOVE_FORM_WISHLIST,CAP_NHAT_EMAIL,FECTH_CATEGORIES } from "../ActionTypes";
+import { ADD_TO_CART, ADD_TO_WISHLIST, REMOVE_FORM_CART, REMOVE_FORM_WISHLIST,CAP_NHAT_EMAIL,FECTH_CATEGORIES, LOGIN, LOGOUT } from "../ActionTypes";
 import {GETCATEGORIES} from "../../../API"
 import actionTypes from './actionTypes';
 import axios from "axios";
@@ -30,4 +30,12 @@ export const addToWishlist = data =>({
 export const removeFormWishlist = index =>({
     type: REMOVE_FORM_WISHLIST,
     payload: index,
+});
+
+export const login = () => ({
+    type: LOGIN,
+});
+
+export const logout = () => ({
+    type: LOGOUT,
 });

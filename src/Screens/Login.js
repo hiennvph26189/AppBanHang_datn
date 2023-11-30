@@ -7,6 +7,7 @@ import { LOGIN } from '../../API';
 import {updateEmail} from "../redux/actions/Actions";
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
+import CustomHeader from '../common/CustomHeader';
 
 const Login = () => {
   
@@ -18,7 +19,7 @@ const Login = () => {
   const [showPassWord1, setShowPass1] = useState(true);
   const [err, setError] = useState(false);
   const [errMessage, setErrorMessage] = useState('');
-  const info = useSelector((state)=> state.Reducers.arrUser)
+  const info = useSelector((state)=> state.Reducers.arrUser);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -77,6 +78,10 @@ const Login = () => {
 
   }
   return (
+    <>
+    <CustomHeader 
+    title={'Login'}
+    />
     <View style={{ flex: 1 }}>
       <Image
         source={require('../images/LogoChao.png')}
@@ -137,6 +142,7 @@ const Login = () => {
           navigation.navigate('Signup');
         }}>Create New Account?</Text>
     </View>
+    </>
   )
 }
 
