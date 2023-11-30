@@ -5,14 +5,12 @@ import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { createNativeStackNavigator, } from '@react-navigation/native-stack';
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
-import EditProfile from "../common/EditProfile";
 import axios from "axios";
 import Header from "../common/Header";
 import { PROFILEMEMBER, LOGIN } from "../../API";
 import CommonButton from "../common/CommonButton";
 import CustomTextInput from "../common/CustomTextInput";
 import { updateEmail } from "../redux/actions/Actions";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Profile = (props) => {
 
@@ -47,9 +45,9 @@ const Profile = (props) => {
     }
     // logout
     const singOut = () => {
-        dispatch(updateEmail({},false))
+        dispatch(updateEmail({}, false))
         props.setSelectedTab1()
-        
+
     }
 
     // chuyển màn hình lịch sử đơn hàng
@@ -68,7 +66,7 @@ const Profile = (props) => {
         })
     }
     // validate trước khi đăng nhập
-    const Login=()=>{
+    const Login = () => {
         navigation.navigate('Login');
     }
 
@@ -198,15 +196,6 @@ const Profile = (props) => {
                                 </View>
 
                             </TouchableRipple>
-                            <TouchableRipple>
-                                <View style={styles.menuItem}>
-                                    <Icon name="account-check-outline" color="#000" size={25} />
-                                    <Text style={styles.menuItemText}>
-                                        Hỗ trợ
-                                    </Text>
-                                </View>
-
-                            </TouchableRipple>
                             <TouchableRipple onPress={() => { historyBuyProduct() }}>
                                 <View style={styles.menuItem}>
                                     <Icon name="book" color="#000" size={25} />
@@ -216,6 +205,16 @@ const Profile = (props) => {
                                 </View>
 
                             </TouchableRipple>
+                            <TouchableRipple onPress={()=>{navigation.navigate('Address')}}>
+                                <View style={styles.menuItem}>
+                                    <Icon name="account-check-outline" color="#000" size={25} />
+                                    <Text style={styles.menuItemText}>
+                                        Hỗ trợ
+                                    </Text>
+                                </View>
+
+                            </TouchableRipple>
+
                             <TouchableRipple onPress={() => { rePasswd() }}>
                                 <View style={styles.menuItem}>
                                     <Icon name="lock" color="#000" size={25} />
@@ -237,14 +236,14 @@ const Profile = (props) => {
                         </View>
                     </ScrollView>
                 </SafeAreaView>
-                : 
-                <View style={{ justifyContent:'center', alignItems:'center', alignSelf:'center', marginTop:500}}>
-                    <Button 
-                    title="Login"
-                    onPress={()=>{
-                        Login();
-                    }}>
-                       
+                :
+                <View style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'center', marginTop: 500 }}>
+                    <Button
+                        title="Login"
+                        onPress={() => {
+                            Login();
+                        }}>
+
                     </Button>
                 </View>
             }

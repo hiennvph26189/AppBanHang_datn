@@ -89,7 +89,8 @@ const ItemLuotMua = (props) => {
                         justifyContent: "center",
                         alignItems: "center"
                     }} />
-            </View><Text style={{
+            </View>
+            <Text style={{
                 marginLeft: 10,
                 marginTop: 8,
                 fontSize: 16,

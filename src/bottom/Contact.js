@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
 import { FEED_BACK } from "../../API";
+import Header from "../common/Header";
 
 const Contact = () => {
   const WIDTH = Dimensions.get('window').width;
@@ -48,6 +49,10 @@ const Contact = () => {
   }, [])
 
   return (
+    <>
+    <Header 
+    title={'Contact'}
+    />
     <ScrollView style={{ flexGrow: 1, flex: 1, marginBottom: 10 }}>
       <View style={{ height: 300, padding: 6, WIDTH }}>
         <MapView style={{ flex: 1, height: 200 }}
@@ -218,6 +223,7 @@ const Contact = () => {
       </View>
 
     </ScrollView>
+    </>
   );
 };
 export default Contact;

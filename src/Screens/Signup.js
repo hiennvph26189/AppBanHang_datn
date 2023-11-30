@@ -1,10 +1,11 @@
-import { View, Text, ScrollView, Image, Pressable, StyleSheet } from 'react-native'
+import { View, Text, ScrollView, Image, Pressable, StyleSheet, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import { RadioButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native'
 import CustomTextInput from '../common/CustomTextInput';
 import CommonButton from '../common/CommonButton';
 import { ADDMENBER } from '../../API';
+import axios from 'axios';
 
 const Signup = () => {
     const [showPassWord, setShowPass] = useState(true)
@@ -97,18 +98,16 @@ const Signup = () => {
             setErrMessage("Vui lòng nhập mật khẩu của bạn")
             return
         }
-        if (repassword) {
-
-            if (repassword !== password) {
-                setBadRePassWord(true)
-                setErrMessage("Nhập lại mật khẩu không chính xác")
-            } else {
-                setBadRePassWord(false)
-            }
+        if (!repassword) {
+            setBadRePassWord(true);
+            setErrMessage("Vui lòng nhập lại mật khẩu của bạn");
+            return;
+        } else if (repassword !== password) {
+            setBadRePassWord(true);
+            setErrMessage("Nhập lại mật khẩu không chính xác");
+            return;
         } else {
-            setBadRePassWord(true)
-            setErrMessage("Vui lòng nhập mật khẩu của bạn")
-            return
+            setBadRePassWord(false);
         }
         const data = {
             email: email,

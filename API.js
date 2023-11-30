@@ -11,10 +11,12 @@ export const PROFILEMEMBER = URL+"api/profile-member"
 export const LIST_HOST_SALES_PRODUCTS = URL + "api-app/list-hot-sale-product"
 // List host order products app
 export const LIST_HOST_ODERS_PRODUCTS = URL + "api-app/list-hot-order-product"
-// list sản phẩm theo danh sách sản phẩm
+// list sản phẩm theo danh mục sản phẩm
 export const LIST_PRODUCTS_IN_CATEGORIES = URL + "api-app/list-category-in-products"
 //edit profile member
-export const EDITPROFILEMEMBER = URL+"api/edit-profile-member"
+export const EDIT_PROFILE_MEMBER = URL+"api/edit-profile-member"
+// sản phẩm mới nhất
+export const GET_NEW_PRODUCTS = URL+"api-app/list-new-product"
 //nap tien
 export const NAPTIENMEMBER = URL+"api/naptien-members"
 //get lịch sử nạp tiền
@@ -26,19 +28,19 @@ export const GET_ALLPRODUCTS = URL+"api/get-all-total-product"
 //get one product
 export const GET_ONE_PRODUCT = URL+"api/get-one-product"
 // lấy ra sản phẩm trong giỏ hàng
-export const GETCARTUSER = URL+"api/user-carts-product"
+export const GET_CART_USER = URL+"api/user-carts-product"
 //Đổi mật khẩu
 export const CHANGE_PASSWD = URL+"api-app/changepass-member"
 //Phản hồi
 export const FEED_BACK = URL+"api-app/lienhe-member";
 //
-export const POSTCARTUSER = URL+"api/oders-product"
+export const POST_CART_USER = URL+"api/oders-product"
 //
-export const DELETECARTUSER = URL+"api/delete-cart-product"
+export const DELETE_CART_USER = URL+"api/delete-cart-product"
 //
-export const UPDATECARTUSER = URL+"api/update-cart-product"
+export const UPDATE_CART_USER = URL+"api/update-cart-product"
 //
-export const ORDERCARTUSER = URL+"api/orders-cart-product"
+export const ORDER_CART_USER = URL+"api/orders-cart-product"
 //
 export const GET_ALL_USER_ORDERS = URL+"api/lich-su-cart-product"
 //

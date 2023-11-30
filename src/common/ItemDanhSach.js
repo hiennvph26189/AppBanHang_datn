@@ -1,77 +1,89 @@
-import { View, Text,Alert, Image, TouchableOpacity } from "react-native"
-import {Avatar} from "react-native-paper"
+import { View, Text, Alert, Image, TouchableOpacity } from "react-native"
 import React, { useEffect } from "react";
 import axios from "axios";
-import {POSTCARTUSER} from "../../API"
-import {useDispatch, useSelector} from 'react-redux'
-import { useNavigation,useIsFocused } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Foundation"
-const MyProductItem = (props) => {
-    const item = props.item
+import { POST_CART_USER } from "../../API";
+import { useNavigation } from "@react-navigation/native";
+import { useSelector } from "react-redux";
+
+const ItemDanhSach = (props) => {
+
+    const item = props.item;
     const navigation = useNavigation();
-    useEffect(()=>{
-        
-    })
     const info = useSelector(state => state.Reducers.arrUser);
-    showImage = (image)=>{
-        if(image){
-           
+    useEffect(() => {
+
+    })
+    showImage = (image) => {
+        if (image) {
+
             let list = JSON.parse(image)
-           let url = ""
-           for(let i = 0; i< list.length; i++){
-                if(list[0]){
+            let url = ""
+            for (let i = 0; i < list.length; i++) {
+                if (list[0]) {
                     url = list[0]
                 }
-           }
-           return url
+            }
+            return url
 
         }
     }
-    const price =(price)=>{
+    const price = (price) => {
         let x = price;
-        x = x.toLocaleString('it-IT', {style : 'currency', currency : 'VND'});
-        return  x;
-}
-   onAddToCart= async(item)=>{
-        let id =  info.id
+        x = x.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
+        return x;
+    }
+
+    onAddToCart = async (item) => {
+        let id = info.id
         // console.log("Ok")
-        if(id&&item.id){
-            if(item.soLuong > 0){
+        if (id && item.id) {
+            if (item.soLuong > 0) {
                 let data = {
                     idUser: id,
                     idSP: item.id,
-                    size: item.idDanhSach === 56?"40":"M",
-                    soLuong:1
+                    size: "M",
+                    soLuong: 1
                 }
-                await axios.post(POSTCARTUSER,data).then(res =>{
-                    if(res.data.errCode === 0 ){
-                        props.addCart()
+                await axios.post(POST_CART_USER, data).then(res => {
+                    if (res.data.errCode === 0) {
+                        Alert.alert('Thông báo', 'Đặt hàng thành công', [
+                            {
+                                text: 'OK', onPress: () => {
+                                    navigation.navigate('Home');
+                                }
+                            },
+                        ]);
                     }
-                })
-            }else{
-                
+                }).catch((err) => { console.log(err) })
+            } else {
+
                 Alert.alert('Thông báo', 'Xin lỗi quý khách vì sản phẩm đã không còn hàng, chúng tôi sẽ cố gắng nhập hàng sớm nhất có thể', [
-                    {text: 'OK', onPress: () => {
-                       
-                    }},
-                  ]);
-            
+                    {
+                        text: 'OK', onPress: () => {
+
+                        }
+                    },
+                ]);
+
             }
-           
+
         }
     }
+
     handleDetailProduct = (id)=>{
         navigation.navigate('ProductDetail',{id: id},{handleDetailProduct:{handleDetailProduct}});
     }
     return (
         <TouchableOpacity  onPress={()=>{handleDetailProduct(item.id)}} style={{
-            width: 250,
+            width: 180,
             height: "auto",
             borderRadius: 10,
             elevation: 5,
             backgroundColor: '#fff',
-            marginLeft: 20,
+            marginLeft: 1,
             marginBottom: 10,
+            marginTop:10
         }}>
             <View style={{
                        
@@ -80,12 +92,13 @@ const MyProductItem = (props) => {
                     }} >
                 <Image source={{uri:showImage(item.image)}}
                     style={{
-                        width: 200,
-                        height: 200,
+                        width: 160,
+                        height: 160,
                         borderTopLeftRadius: 10,
                         borderTopRightRadius: 10,
                         justifyContent:"center",
-                        alignItems:"center"
+                        alignItems:"center",
+                        marginTop:10
                     }} />
             </View>
             
@@ -93,7 +106,7 @@ const MyProductItem = (props) => {
             <Text style={{
                 marginLeft: 10,
                 marginTop:8,
-                fontSize: 16,
+                fontSize: 15,
                 fontWeight: '600',
             }}>
                 {item.tenSp}</Text>
@@ -106,7 +119,7 @@ const MyProductItem = (props) => {
             }}>
                 {item.sale <=0?
                  <Text style={{
-                    fontSize: 18,
+                    fontSize: 15,
                     fontWeight: '600',
                     color: 'red'
                 }}>
@@ -114,11 +127,11 @@ const MyProductItem = (props) => {
                     {price(item.giaSanPham) }
                 </Text>
                 :   <View style={{flexDirection:'row',
-                    
+                  
                     alignItems:"center"
                 }}>
                     <Text style={{
-                        fontSize: 17,
+                        fontSize: 14,
                         fontWeight: '600',
                         color: 'red',
                        
@@ -127,9 +140,9 @@ const MyProductItem = (props) => {
                     {price(item.giaSanPham-(item.giaSanPham *(item. sale/100)) ) }
                 </Text>
                 <Text style={{
-                    fontSize:25,
-                    marginLeft:10,
-                    marginRight:10
+                    fontSize:20,
+                    marginLeft:2,
+                    marginRight:2
                 }}>-</Text>
                 <Text style={{
                         fontSize: 15,
@@ -143,7 +156,11 @@ const MyProductItem = (props) => {
                 </View>
                     
                 }
-               
+               <View>
+                    <Text style={{fontSize:14,fontWeight:"700"}}>
+                        Đã bán: {item.luotMua}
+                    </Text>
+               </View>
                 <TouchableOpacity
                     style={{
                         borderWidth: 1,
@@ -167,8 +184,8 @@ const MyProductItem = (props) => {
                     borderRadius: 20,
                    
                     position: 'absolute',
-                    top: -5,
-                    right: 25,
+                    top: 5,
+                    right: 20,
                     flex: 1,
                     flexDirection: 'row',
                     alignItems: 'center',
@@ -183,7 +200,7 @@ const MyProductItem = (props) => {
                    
 
                    
-                    <Icon name="burst" title="sadd" size={55}  color={"#DD0000"}/>
+                    <Icon name="burst" title="sadd" size={50}  color={"#DD0000"}/>
                     <Text style={{ 
                         color:"#fff",
                         position: 'absolute',
@@ -203,4 +220,4 @@ const MyProductItem = (props) => {
     );
 };
 
-export default MyProductItem;
+export default ItemDanhSach;

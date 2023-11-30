@@ -7,7 +7,7 @@ import Profile from "../bottom/Profile";
 import { useDispatch, useSelector } from "react-redux";
 import News from "../bottom/News";
 import Main2 from "../bottom/Main2";
-import { GETCARTUSER } from "../../API"
+import { GET_CART_USER } from "../../API"
 import axios from "axios";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 
@@ -34,7 +34,7 @@ const Home = (props) => {
         let count = 0
         if (info.id) {
             let idUser = info.id;
-            await axios.get(`${GETCARTUSER}?id=${idUser}`).then(res => {
+            await axios.get(`${GET_CART_USER}?id=${idUser}`).then(res => {
                 if (res.data.errCode == 0) {
                     res.data.Carts.map((item) => {
                         count = count + 1

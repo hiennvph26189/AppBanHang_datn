@@ -9,11 +9,13 @@ import Home from '../Screens/Home';
 import ProductDetail from '../common/ProductDetail';
 import ListProducts from '../common/ListProducts';
 import Main from '../bottom/Main';
-import EditProfile from '../common/EditProfile';
+
 import RePass from '../edit/RePass';
 import HistoryBuy from '../edit/HistoryBuy';
 import NewsPaperDetail from '../edit/NewsPaperDetail';
 import Contact from '../bottom/Contact';
+import EditProfile from '../edit/EditProfile';
+import Address from '../edit/Address';
 
 const Stack = createStackNavigator();
 
@@ -27,11 +29,12 @@ const AppNavigator = () => {
                 <Stack.Screen options={{ headerShown: false }} name='Signup' component={Signup} />
                 <Stack.Screen options={{headerShown: false }} name='ListProducts' component={ListProducts}/>
                 <Stack.Screen options={{headerShown: false }} name='ProductDetail' component={ProductDetail}/>
-                <Stack.Screen options={{headerShown: false }} name='Editprofile' component={EditProfile}/>
+                <Stack.Screen options={{headerShown: false }} name='EditProfile' component={EditProfile}/>
                 <Stack.Screen options={{headerShown: false }} name='RePasswd' component={RePass}/>
                 <Stack.Screen options={{headerShown: false }} name='History' component={HistoryBuy}/>
                 <Stack.Screen options={{headerShown: false }} name='NewsDetail' component={NewsPaperDetail}/>
                 <Stack.Screen options={{headerShown: false }} name='Contact' component={Contact}/>
+                <Stack.Screen options={{headerShown: false }} name='Address' component={Address}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
