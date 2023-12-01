@@ -15,7 +15,6 @@ import HistoryBuy from '../edit/HistoryBuy';
 import NewsPaperDetail from '../edit/NewsPaperDetail';
 import Contact from '../bottom/Contact';
 import EditProfile from '../edit/EditProfile';
-import Address from '../edit/Address';
 import DangXuLy from '../edit/DangXuLy';
 import DangGiaoHang from '../edit/DangGiaoHang';
 import GiaoThanhCong from '../edit/GiaoThanhCong';
@@ -41,7 +40,6 @@ const AppNavigator = () => {
                 <Stack.Screen options={{ headerShown: false }} name='NewsDetail' component={NewsPaperDetail} />
                 <Stack.Screen options={{ headerShown: false }} name='Contact' component={Contact} />
                 <Stack.Screen options={{ headerShown: false }} name='OrderDetail' component={OrderDetail} />
-                <Stack.Screen options={{ headerShown: false }} name='Address' component={Address} />
                 <Stack.Screen options={{ headerShown: false }} name='DangXuLy' component={DangXuLy} />
                 <Stack.Screen options={{ headerShown: false }} name='DangGiaoHang' component={DangGiaoHang} />
                 <Stack.Screen options={{ headerShown: false }} name='GiaoThanhCong' component={GiaoThanhCong} />
