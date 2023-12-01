@@ -187,7 +187,7 @@ const Profile = (props) => {
                                 </View>
 
                             </TouchableRipple>
-                            <TouchableRipple >
+                            <TouchableRipple onPress={()=>{navigation.navigate('NewAddress')}}>
                                 <View style={styles.menuItem}>
                                     <Icon name="history" color="#000" size={25} />
                                     <Text style={styles.menuItemText}>

@@ -37,8 +37,8 @@ const ProductDetail = (props) => {
     const [soLuong, setSoLuong] = useState(0);
 
 
-    const lienHe=()=>{
-        navigation.navigate('Home',1);
+    const lienHe = () => {
+        navigation.navigate('Home', 1);
     }
     onRefresh = () => {
         getDetailProduct();
@@ -342,8 +342,8 @@ const ProductDetail = (props) => {
                             </View>
 
                             <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 10, marginBottom: 20 }}>
-                                <TouchableOpacity onPress={()=>{lienHe()}}
-                                style={{ marginTop: 10, marginRight: 20, borderWidth: 1, borderRadius: 7, padding: 10, width: 150, flexDirection: "row", justifyContent: 'center', alignItems: 'center', backgroundColor: '#5d83db', borderColor: '#5d83db' }}>
+                                <TouchableOpacity onPress={() => { lienHe() }}
+                                    style={{ marginTop: 10, marginRight: 20, borderWidth: 1, borderRadius: 7, padding: 10, width: 150, flexDirection: "row", justifyContent: 'center', alignItems: 'center', backgroundColor: '#5d83db', borderColor: '#5d83db' }}>
                                     <Text style={{ textAlign: 'center', fontSize: 17, textTransform: 'uppercase', fontWeight: 'bold', color: 'white' }}>Liên Hệ</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity

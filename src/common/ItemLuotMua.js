@@ -2,7 +2,7 @@ import { View, Text, Alert, Image, TouchableOpacity } from "react-native"
 import { Avatar } from "react-native-paper"
 import React, { useEffect } from "react";
 import axios from "axios";
-import { GETCARTUSER, POSTCARTUSER } from "../../API"
+import { GETCARTUSER, POST_CART_USER } from "../../API"
 import { useDispatch, useSelector } from 'react-redux'
 import Icon from "react-native-vector-icons/Foundation"
 import { useNavigation, useIsFocused } from "@react-navigation/native";
@@ -43,7 +43,7 @@ const ItemLuotMua = (props) => {
                     size: "M",
                     soLuong: 1
                 }
-                await axios.post(POSTCARTUSER, data).then(res => {
+                await axios.post(POST_CART_USER, data).then(res => {
                     if (res.data.errCode === 0) {
                         props.addCart()
                     }
@@ -75,6 +75,7 @@ const ItemLuotMua = (props) => {
             marginLeft: 20,
             marginBottom: 40,
         }}>
+
             <View style={{
 
                 justifyContent: "center",
@@ -90,6 +91,7 @@ const ItemLuotMua = (props) => {
                         alignItems: "center"
                     }} />
             </View>
+
             <Text style={{
                 marginLeft: 10,
                 marginTop: 8,
@@ -165,13 +167,12 @@ const ItemLuotMua = (props) => {
                     <Text style={{ textAlign: "center" }}>Add to Cart</Text>
                 </TouchableOpacity>
             </View>
+
             {item.sale > 0 &&
+
                 <View
                     style={{
-
-
                         borderRadius: 20,
-
                         position: 'absolute',
                         top: -5,
                         right: 25,
@@ -201,11 +202,25 @@ const ItemLuotMua = (props) => {
                         }}>-{item.sale}%
                         </Text>
                     </View>
-
-
-
+                    {/* <TouchableOpacity
+                        style={{
+                            alignSelf: 'flex-start',
+                            marginHorizontal: 10,
+                            width: 40,
+                            height: 40,
+                            backgroundColor: '#fff',
+                            borderRadius: 20,
+                            elevation: 5,
+                            alignItems: 'center',
+                        }}>
+                        <Image
+                            source={require('../images/heart.png')}
+                            style={{ width: 25, height: 25, marginTop: 8 }}
+                        />
+                    </TouchableOpacity> */}
                 </View>
             }
+
         </TouchableOpacity>
     );
 };

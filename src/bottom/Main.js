@@ -66,7 +66,6 @@ const Main = (props) => {
     // sản phẩm theo danh mục sản phẩm
     const getProductCate = async () => {
         await axios.get(LIST_PRODUCTS_IN_CATEGORIES).then((res) => {
-            console.log(res + "category");
             if (res.data.errCode === 0) {
 
                 setListCategoryProduct(res.data.dataProducts)

@@ -33,19 +33,19 @@ export const GET_CART_USER = URL+"api/user-carts-product"
 export const CHANGE_PASSWD = URL+"api-app/changepass-member"
 //Phản hồi
 export const FEED_BACK = URL+"api-app/lienhe-member";
-//
+//Thêm vào giỏ hàng
 export const POST_CART_USER = URL+"api/oders-product"
-//
+//delete order
 export const DELETE_CART_USER = URL+"api/delete-cart-product"
-//
+//update order
 export const UPDATE_CART_USER = URL+"api/update-cart-product"
 //
 export const ORDER_CART_USER = URL+"api/orders-cart-product"
-//
+//Đơn hàng đang chờ xấc nhận
 export const GET_ALL_USER_ORDERS = URL+"api/lich-su-cart-product"
-//
+//Hủy đơn hàng
 export const HUY_USER_ORDERS = URL+"api/huy-don-cart-product"
-//
+//chi tiết hóa đơn
 export const CHI_TIET_ORDERS = URL+"api/chi-tiet-don-cart-product"
 //
 export const DELETE_ORDERS = URL+"api/delete-orders"
@@ -57,3 +57,11 @@ export const GET_ONE_MEMBER = URL+"get/one-member"
 export const GET_DANH_SACH_SAN_PHAM_MEMBER = URL+"api/get-all-catygory-product"
 //
 export const DELETE_TIEN_DA_NAP = URL+"api/delete-nap-tien-Member"
+// get danh sách tỉnh thành
+export const GET_TINH_THANH = URL +'api-app/tinhThanh';
+//get quận huyện
+export const GET_QUAN = URL+'api-app/quan';
+//get xã phường hị trấn
+export const GET_XA = URL+'api-app/xa'
+//thêm địa chỉ nhận hàng
+export const POST_ADDRESS_MEMBERS= URL+'api-app/address-member'
