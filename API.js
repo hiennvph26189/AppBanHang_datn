@@ -65,3 +65,5 @@ export const GET_QUAN = URL+'api-app/quan';
 export const GET_XA = URL+'api-app/xa'
 //thêm địa chỉ nhận hàng
 export const POST_ADDRESS_MEMBERS= URL+'api-app/address-member'
+//get Địa chỉ
+export const GET_ADDRESS_MEMBERS = URL+'api-app/get-address-member'

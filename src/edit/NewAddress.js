@@ -129,7 +129,7 @@ const NewAddress = () => {
             console.log(res.data+'Ssss');
             if(res.data.errCode==0){
                 ToastAndroid.showWithGravity(
-                    'Đăng kí thành công',
+                    'Thêm địa chỉ thành công',
                     ToastAndroid.SHORT,
                     ToastAndroid.BOTTOM, 25, 50,
                 );

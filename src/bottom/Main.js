@@ -54,11 +54,9 @@ const Main = (props) => {
     //sản phẩm mới nhất
     const getNewProduct = async () => {
         await axios.get(GET_NEW_PRODUCTS).then((res) => {
-            console.log(res + "sales");
             if (res.data.errCode === 0) {
 
                 setNewProduct(res.data.newProduct)
-                console.log(res.data.newProduct + "NEw");
 
             }
         }).catch((err) => { console.log(err) })

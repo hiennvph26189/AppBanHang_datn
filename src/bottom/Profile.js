@@ -178,7 +178,7 @@ const Profile = (props) => {
                                 </View>
 
                             </TouchableRipple>
-                            <TouchableRipple >
+                            <TouchableRipple onPress={()=>{navigation.navigate('ListAddress')}}>
                                 <View style={styles.menuItem}>
                                     <Icon name="credit-card" color="#000" size={25} />
                                     <Text style={styles.menuItemText}>
@@ -205,7 +205,7 @@ const Profile = (props) => {
                                 </View>
 
                             </TouchableRipple>
-                            <TouchableRipple onPress={()=>{navigation.navigate('Address')}}>
+                            <TouchableRipple >
                                 <View style={styles.menuItem}>
                                     <Icon name="account-check-outline" color="#000" size={25} />
                                     <Text style={styles.menuItemText}>
