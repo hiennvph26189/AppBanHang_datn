@@ -54,11 +54,9 @@ const Main = (props) => {
     //sản phẩm mới nhất
     const getNewProduct = async () => {
         await axios.get(GET_NEW_PRODUCTS).then((res) => {
-            console.log(res + "sales");
             if (res.data.errCode === 0) {
 
                 setNewProduct(res.data.newProduct)
-                console.log(res.data.newProduct + "NEw");
 
             }
         }).catch((err) => { console.log(err) })
@@ -66,7 +64,6 @@ const Main = (props) => {
     // sản phẩm theo danh mục sản phẩm
     const getProductCate = async () => {
         await axios.get(LIST_PRODUCTS_IN_CATEGORIES).then((res) => {
-            console.log(res + "category");
             if (res.data.errCode === 0) {
 
                 setListCategoryProduct(res.data.dataProducts)
