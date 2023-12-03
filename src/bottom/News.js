@@ -1,3 +1,27 @@
+<<<<<<< HEAD
+import { View, Text, ScrollView } from 'react-native'
+import React, {useEffect,useState} from 'react'
+import Header from '../common/Header';
+import NewsItem from '../common/NewsItem';
+import { GET_ALL_NEWS, } from "../../API";
+import axios from "axios";
+
+
+const News = () => {
+  const [arrNews, setArrNews] = useState([])
+
+  const getAllNew = () => {
+    axios.get(GET_ALL_NEWS).then((res) => {
+
+      if (res.data.errCode === 0) {
+        setArrNews(res.data.news)
+      }
+    }).catch((err) => { console.log(err) })
+  }
+  useEffect(() => {
+    getAllNew()
+  }, [])
+=======
 import { View, Text, ScrollView, RefreshControl } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Header from '../common/Header';
@@ -29,10 +53,24 @@ const News = (props) => {
     getAllNews();
   }
 
+>>>>>>> 28961474e75842d659a9e1cd3dc475320f28e601
   return (
     <View>
       <Header
         title='News' />
+<<<<<<< HEAD
+      <ScrollView>
+        {arrNews.map((item) => {
+          return (<NewsItem
+            key={item.id}
+            arrNews={item}
+          />
+          )
+        })}
+
+      </ScrollView>
+      {/* <NewsItem/> */}
+=======
 
       <ScrollView
         refreshControl={
@@ -51,6 +89,7 @@ const News = (props) => {
 
         })}
       </ScrollView>
+>>>>>>> 28961474e75842d659a9e1cd3dc475320f28e601
     </View>
   );
 };

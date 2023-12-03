@@ -36,5 +36,16 @@
   "devDependencies": {
     "@babel/core": "^7.20.0"
   },
-  "private": true
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hiennvph26189/AppBanHang_datn.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hiennvph26189/AppBanHang_datn/issues"
+  },
+  "homepage": "https://github.com/hiennvph26189/AppBanHang_datn#readme",
+  "description": ""
 }

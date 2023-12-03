@@ -1,3 +1,31 @@
+<<<<<<< HEAD
+import { View, Text, ScrollView, TouchableOpacity,useWindowDimensions, Image } from 'react-native'
+// import Moment from 'moment';
+import React from 'react'
+// import fr from "moment/locale/fr";
+import { useNavigation,useIsFocused } from "@react-navigation/native";
+
+const NewsItem = (props) => {
+    const id = props.id;
+    const item = props.arrNews;
+    const navigation = useNavigation();
+    const { width } = useWindowDimensions();
+    const tomTatTinTuc = {
+        html: `${item.tomTatTinTuc}`
+      };
+      const formatDate= (date)=>{
+        const newFr = Moment(date).locale("vi", fr).format("DD/MM/YYYY ");
+        return newFr
+    }
+    newsDetail = (item)=>{
+        if(item){
+            navigation.navigate('Chi tiết tin tức',{item: item});
+        }
+
+    }
+  return (
+        <TouchableOpacity key={id} onPress={()=>{newsDetail(item)}}  style={{flexDirection:'row',width:"100%", padding:5, marginTop:15,borderBottomColor:"#ccc",borderBottomWidth:1}}>
+=======
 import { View, Text, ScrollView, TouchableOpacity, Image, useWindowDimensions } from 'react-native'
 import React from 'react'
 import moment from 'moment';
@@ -26,6 +54,7 @@ const NewsItem = (props) => {
 
   return (
         <TouchableOpacity key={id} onPress={()=>{newsDetail(item)}} style={{flexDirection:'row',width:"100%", padding:5, marginTop:15,borderBottomColor:"#ccc",borderBottomWidth:1}}>
+>>>>>>> 28961474e75842d659a9e1cd3dc475320f28e601
             <View>
                 <Image source={{uri: item.anhTinTuc}}
                 style={{width:120, height:120}}
