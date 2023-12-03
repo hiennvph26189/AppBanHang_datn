@@ -6,34 +6,33 @@ import MyProductItem from '../common/MyProductItem';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToCart } from '../redux/actions/Actions';
 import axios from 'axios';
-import { API_GETCATEGORY, API_HOT_PRODUCTS, API_HOTSALE_PRODUCTS, API_NEW_PRODUCTS, API_PRODUCT_CATEGORY } from '../../API';
-// import {GETCATEGORIES, GETALLPRODUCTS} from '../../API';
+import { GET_CATEGORIES, GET_ALLPRODUCTS, LIST_HOST_SALES_PRODUCTS, LIST_HOST_ODERS_PRODUCTS, LIST_PRODUCTS_IN_CATEGORIES, GET_NEW_PRODUCTS } from '../../API';
 import ItemLuotMua from '../common/ItemLuotMua'
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 
-const Main = () => {
+const Main = (props) => {
     const dispatch = useDispatch();
+    const navigation = useNavigation();
     const [categoryList, setCategoryList] = useState([]);
-    const [tShirtList, setTshirtList] = useState([]);
-    const [jeansList, setJeanList] = useState([]);
-    const [shoesList, setShoesList] = useState([]);
-    const [jackList, setJackList] = useState([]);
-    const [slipperList, setSlipperList] = useState([]);
+    const [allProducts, setAllProducts] = useState([]);
     const [listHotBuy, setListHotBuy] = useState([]);
     const [listSaleProduct, setSaleProduct] = useState([]);
     const [listNewProduct, setNewProduct] = useState([]);
     const [listCategoryProduct, setListCategoryProduct] = useState([]);
 
+    //sản phẩm bán nhiều nhất
     const getHot = async () => {
-        axios.get(API_HOT_PRODUCTS).then((res) => {
+        await axios.get(LIST_HOST_ODERS_PRODUCTS).then((res) => {
 
             if (res.data.errCode === 0) {
 
-                setListHotBuy(res.data.hotProduct)
+                setListHotBuy(res.data.hotOrdersProducts)
             }
         }).catch((err) => { console.log(err) })
     }
+    //get category list
     const getCategory = async () => {
-        axios.get(API_GETCATEGORY).then((res) => {
+        await axios.get(GET_CATEGORIES).then((res) => {
 
             if (res.data.errCode === 0) {
 
@@ -41,8 +40,9 @@ const Main = () => {
             }
         }).catch((err) => { console.log(err) })
     }
+    //hot sale
     const getHotSale = async () => {
-        axios.get(API_HOTSALE_PRODUCTS).then((res) => {
+        await axios.get(LIST_HOST_SALES_PRODUCTS).then((res) => {
 
             if (res.data.errCode === 0) {
 
@@ -51,9 +51,9 @@ const Main = () => {
             }
         }).catch((err) => { console.log(err) })
     }
+    //sản phẩm mới nhất
     const getNewProduct = async () => {
-        axios.get(API_NEW_PRODUCTS).then((res) => {
-            console.log(res + "sales");
+        await axios.get(GET_NEW_PRODUCTS).then((res) => {
             if (res.data.errCode === 0) {
 
                 setNewProduct(res.data.newProduct)
@@ -61,12 +61,23 @@ const Main = () => {
             }
         }).catch((err) => { console.log(err) })
     }
+    // sản phẩm theo danh mục sản phẩm
     const getProductCate = async () => {
-        axios.get(API_PRODUCT_CATEGORY).then((res) => {
+        await axios.get(LIST_PRODUCTS_IN_CATEGORIES).then((res) => {
+            if (res.data.errCode === 0) {
+
+                setListCategoryProduct(res.data.dataProducts)
+
+            }
+        }).catch((err) => { console.log(err) })
+    }
+    //get tất cả sản phẩm
+    const getAllProducts = async () => {
+        await axios.get(GET_ALLPRODUCTS).then((res) => {
             console.log(res + "category");
             if (res.data.errCode === 0) {
 
-                setListCategoryProduct(res.data.data)
+                setAllProducts(res.data.totalProducts)
 
             }
         }).catch((err) => { console.log(err) })
@@ -77,44 +88,54 @@ const Main = () => {
         getHot();
         getHotSale();
         getNewProduct();
+        getAllProducts();
         getProductCate();
-        let tempCategory = [];
-        products.category.map(item => {
-            tempCategory.push(item);
-        });
-        // setCategoryList(tempCategory);
-        setTshirtList(products.category[0].data);
-        setJeanList(products.category[1].data);
-        setShoesList(products.category[2].data);
-        setJackList(products.category[3].data);
-        setSlipperList(products.category[4].data);
-    }, []);
-    // listDanhSach = (id) => {
-    //     return (
-    //         <>
-    //             <FlatList
-    //                 data={tShirtList.filter((p) => p.idDanhSach === id)}
-    //                 horizontal
-    //                 showsHorizontalScrollIndicator={false}
-    //                 keyExtractor={(item, index) => index.toString()}
-    //                 extraData={id}
 
-    //                 renderItem={({ item }) => {
-    //                     return (
-    //                         <MyProductItem
-    //                             item={item}
+    }, [useIsFocused]);
 
-    //                             // addCart={addCart}
-    //                         />
-    //                     );
-    //                 }
-    //                 }
+    onRefresh = () => {
+        setRefreshing(true)
+        getProductCate()
+        getCategory()
+        getHotSale()
+        getNewProduct()
+        getHot()
+        getAllProducts()
+    }
 
-    //             />
+    const addCart = () => {
 
-    //         </>
-    //     )
-    // }
+        props.addCart()
+    }
+    listDanhSach = (id) => {
+        return (
+            <>
+                <FlatList
+                    data={allProducts.filter((p) => p.idDanhSach === id)}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    keyExtractor={(item, index) => index.toString()}
+                    extraData={id}
+
+                    renderItem={({ item }) => {
+                        return (
+                            <MyProductItem
+                                item={item}
+
+                                addCart={addCart}
+                            />
+                        );
+                    }
+                    }
+
+                />
+
+            </>
+        )
+    }
+    const listProducts = (id, name) => {
+        navigation.navigate('ListProducts', { id: id, name: name });
+    }
 
     return (
         <ScrollView style={{ flex: 1 }}>
@@ -163,12 +184,10 @@ const Main = () => {
                                     fontWeight: '600',
 
                                 }}>
-                                    Sản phẩm mới
+                                    Sản phẩm mới nhất
                                 </Text>
 
-                                {/* <TouchableOpacity onPress={() => { danhSachSabPham("luotMuaNhieu", "Lượt mua nhiều nhất") }} >
-<Text style={{ fontSize: 16, fontWeight: "600", textDecorationLine: "underline", fontStyle: "italic", color: "#3399FF" }}>Xem tất cả</Text>
-</TouchableOpacity> */}
+
                             </View>
                             <ScrollView ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
                                 {listNewProduct && listNewProduct.map((item) => {
@@ -176,7 +195,7 @@ const Main = () => {
 
                                         <ItemLuotMua key={item.id}
                                             item={item}
-
+                                            addCart={addCart}
                                         />
                                     )
                                 })}
@@ -184,6 +203,7 @@ const Main = () => {
                             </ScrollView>
                         </>
                     }
+
                     {listHotBuy && listHotBuy.length > 0 &&
                         <>
                             <View style={{
@@ -199,9 +219,9 @@ const Main = () => {
                                     Lượt mua nhiều nhất
                                 </Text>
 
-                                {/* <TouchableOpacity onPress={() => { danhSachSabPham("luotMuaNhieu", "Lượt mua nhiều nhất") }} >
-            <Text style={{ fontSize: 16, fontWeight: "600", textDecorationLine: "underline", fontStyle: "italic", color: "#3399FF" }}>Xem tất cả</Text>
-          </TouchableOpacity> */}
+                                <TouchableOpacity onPress={() => { listProducts("luotMuaNhieu", "Lượt mua nhiều nhất") }} >
+                                    <Text style={{ fontSize: 16, fontWeight: "600", textDecorationLine: "underline", fontStyle: "italic", color: "#3399FF" }}>Xem tất cả</Text>
+                                </TouchableOpacity>
                             </View>
                             <ScrollView ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
                                 {listHotBuy && listHotBuy.map((item) => {
@@ -209,7 +229,7 @@ const Main = () => {
 
                                         <ItemLuotMua key={item.id}
                                             item={item}
-
+                                            addCart={addCart}
                                         />
                                     )
                                 })}
@@ -233,9 +253,9 @@ const Main = () => {
                                     Hole Sale
                                 </Text>
 
-                                {/* <TouchableOpacity onPress={() => { danhSachSabPham("luotMuaNhieu", "Lượt mua nhiều nhất") }} >
-<Text style={{ fontSize: 16, fontWeight: "600", textDecorationLine: "underline", fontStyle: "italic", color: "#3399FF" }}>Xem tất cả</Text>
-</TouchableOpacity> */}
+                                <TouchableOpacity onPress={() => { listProducts("luotMuaNhieu", "Lượt mua nhiều nhất") }} >
+                                    <Text style={{ fontSize: 16, fontWeight: "600", textDecorationLine: "underline", fontStyle: "italic", color: "#3399FF" }}>Xem tất cả</Text>
+                                </TouchableOpacity>
                             </View>
                             <ScrollView ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
                                 {listSaleProduct && listSaleProduct.map((item) => {
@@ -243,7 +263,7 @@ const Main = () => {
 
                                         <ItemLuotMua key={item.id}
                                             item={item}
-
+                                            addCart={addCart}
                                         />
                                     )
                                 })}
@@ -268,10 +288,15 @@ const Main = () => {
                                         }}>
                                             {item.name}
                                         </Text>
+                                        <TouchableOpacity onPress={() => { listProducts(item.id, item.name) }} >
+                                            <Text style={{ fontSize: 16, fontWeight: "600", textDecorationLine: "underline", fontStyle: "italic", color: "#3399FF" }}>Xem tất cả</Text>
+                                        </TouchableOpacity>
                                     </View>
                                     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
                                         {item.products.map((item) => (
-                                            <ItemLuotMua key={item.id} item={item} />
+                                            <ItemLuotMua key={item.id} item={item}
+                                                addCart={addCart}
+                                            />
                                         ))}
                                     </ScrollView>
                                 </View>

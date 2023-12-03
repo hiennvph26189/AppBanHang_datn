@@ -1,11 +1,9 @@
 import { Text, View, Image, FlatList, RefreshControl, TouchableOpacity, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import Header from "../common/Header";
-
 import MyProductItem from "../common/MyProductItem";
 import ItemLuotMua from "../common/ItemLuotMua";
 import { useDispatch, useSelector } from "react-redux";
-
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import axios from "axios";
 import { GETCATEGORIES, GETALLPRODUCTS } from "../../API"
