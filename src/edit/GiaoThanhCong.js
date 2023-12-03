@@ -1,6 +1,6 @@
 import {  View,ScrollView,FlatList,Alert,Text,RefreshControl,StyleSheet,Image ,Pressable} from 'react-native'
 import axios from "axios";
-import {GET_ALL_USER_ORDERS,HUY_USER_ORDERS} from "../../api"
+import {GET_ALL_USER_ORDERS,HUY_USER_ORDERS} from "../../API"
 import {React,useState,useEffect} from 'react'
 import { useNavigation,useIsFocused } from "@react-navigation/native";
 import {useDispatch, useSelector} from 'react-redux'
