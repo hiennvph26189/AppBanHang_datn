@@ -7,57 +7,69 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import CustomHeader from './CustomHeader';
 
 const ListAddress = (props) => {
   const navigation = useNavigation();
   const [address, setAddress] = useState([]);
+  const isFocused = useIsFocused();
   const info = useSelector(state => state.Reducers.arrUser);
-  console.log(info.id + 'iiii');
+
 
   const getAddress = async () => {
     await axios.get(`${GET_ADDRESS_MEMBERS}?id_members=${info.id}`).then((res) => {
       if (res.data.errCode === 0) {
 
         setAddress(res.data.listAddress)
-        console.log(res.data.listAddress + 'jjadfs');
 
       }
     }).catch((err) => { console.log(err) })
   }
   useEffect(() => {
     getAddress()
-  }, [])
+  }, [isFocused])
+
+  const lodaData = () => {
+    console.log('ok');
+    getAddress()
+  }
   return (
-    <ScrollView
-      showsHorizontalScrollIndicator={false}
-      style={{ marginTop: 20 }}>
-      {address && address.map((item) => {
-        return (
-          <ItemAddress
-            key={item.id}
-            item={item}
+    <>
+      <CustomHeader
+        title={'Địa chỉ'} />
+      <ScrollView
+        showsHorizontalScrollIndicator={false}
+        style={{ marginTop: 10 }}>
+        {address && address.map((item) => {
+          return (
+            <ItemAddress
+              key={item.id}
+              item={item}
+              loadData={lodaData}
 
-          />
-        )
-      })}
-      <TouchableOpacity
-        onPress={() => {navigation.navigate('NewAddress') }}
-        style={{
-          backgroundColor: '#000',
-          justifyContent: 'center',
-          alignItems: 'center',
-          width: '85%',
-          height: 50,
-          borderRadius: 20,
-          alignSelf: 'center',
-          marginTop: 30,
-        }}>
-        <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600' }}>Thêm địa chỉ</Text>
-        
-      </TouchableOpacity>
+            />
+          )
+        })}
+        <TouchableOpacity
+          onPress={() => { navigation.navigate('NewAddress') }}
+          style={{
+            backgroundColor: '#000',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '85%',
+            height: 50,
+            borderRadius: 20,
+            alignSelf: 'center',
+            marginTop: 20,
+            marginBottom: 10
+          }}>
+          <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600', }}>Thêm địa chỉ</Text>
 
-    </ScrollView>
+        </TouchableOpacity>
+
+      </ScrollView>
+    </>
   );
 };
 
