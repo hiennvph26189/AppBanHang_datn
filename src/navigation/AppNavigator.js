@@ -22,6 +22,7 @@ import DonHuy from '../edit/DonHuy';
 import OrderDetail from '../edit/OrderDetail';
 import NewAddress from '../edit/NewAddress';
 import ListAddress from '../common/ListAddress';
+import EditAddress from '../edit/EditAddress';
 
 const Stack = createStackNavigator();
 
@@ -47,6 +48,7 @@ const AppNavigator = () => {
                 <Stack.Screen options={{ headerShown: false }} name='DonHuy' component={DonHuy} />
                 <Stack.Screen options={{ headerShown: false }} name='NewAddress' component={NewAddress} />
                 <Stack.Screen options={{ headerShown: false }} name='ListAddress' component={ListAddress} />
+                <Stack.Screen options={{ headerShown: false }} name='EditAddress' component={EditAddress} />
 
 
             </Stack.Navigator>

@@ -1,7 +1,7 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions, ScrollView, useWindowDimensions } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions, ScrollView, useWindowDimensions, Alert, TextInput, Pressable } from 'react-native'
 import React, { useState } from 'react'
 import { FontAwesome } from '@expo/vector-icons';
-import { GET_CATEGORIES, POSTCARTUSER, GET_ONE_PRODUCT } from '../../API';
+import { GET_CATEGORIES, POST_CART_USER, GET_ONE_PRODUCT } from '../../API';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -27,7 +27,9 @@ const ProductDetail = (props) => {
     const route = props.route;
     let idProduct = route.params.id;
     const { width } = useWindowDimensions();
+
     const info = useSelector(state => state.Reducers.arrUser);
+    const [profile, setProfile] = useState({})
     const [imgActive, setImgActive] = useState(0);
     const [detailProduct, setDetailProduct] = useState({});
     const [ortherProducrs, setOrtherProducrs] = useState([]);
@@ -35,6 +37,8 @@ const ProductDetail = (props) => {
     const [images, setImages] = useState([]);
     const [size, setSize] = useState("");
     const [soLuong, setSoLuong] = useState(0);
+    const [xemChiTiet, setXemChiTiet] = useState(true)
+    const [refreshing, setRefreshing] = useState(false);
 
 
     const lienHe = () => {
@@ -43,6 +47,8 @@ const ProductDetail = (props) => {
     onRefresh = () => {
         getDetailProduct();
         loadCategory();
+        setRefreshing(true)
+
     }
     const getDetailProduct = async () => {
         if (idProduct) {
@@ -71,6 +77,15 @@ const ProductDetail = (props) => {
         loadCategory();
     }, [isFocused])
 
+    const onchange = (nativeEvent) => {
+        if (nativeEvent) {
+            const slide = Math.ceil(nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width);
+            if (slide != imgActive) {
+                setImgActive(slide);
+            }
+        }
+    }
+
     price = (price) => {
         if (price) {
             let x = price;
@@ -91,6 +106,22 @@ const ProductDetail = (props) => {
         }
         return name;
     }
+
+    orProduct = async (id) => {
+
+
+        await axios.get(`${GET_ONE_PRODUCT}?id=${id}`).then((res) => {
+            if (res.data.errCode === 0) {
+                setDetailProduct(res.data.getDetailProduct)
+                setImages(JSON.parse(res.data.getDetailProduct.image))
+                setOrtherProducrs(res.data.arProduct)
+
+            }
+        })
+        setSoLuong(0)
+        setSize("")
+    }
+
     const source = {
         html: `${detailProduct.mota}`
     };
@@ -103,6 +134,128 @@ const ProductDetail = (props) => {
         let count = soLuong
         count = count - 1
         setSoLuong(count)
+    }
+
+    const listSanPhamKhac = () => {
+        let arrSanPhamKhac = []
+        if (ortherProducrs && detailProduct) {
+            ortherProducrs.map((item) => {
+                if (item.id !== detailProduct.id) {
+                    arrSanPhamKhac.push(item)
+                }
+            })
+        }
+        return arrSanPhamKhac.map((item) => {
+            return (
+                <TouchableOpacity
+                 onPress={() => { orProduct(item.id) }} key={item.id}>
+                    <View style={{ flexDirection: "row", margin: 5, borderBottomColor: "#ccc", borderBottomWidth: .7 }}>
+                        <Image
+                            source={{ uri: showImage(item.image) }}
+                            style={{ width: 120, height: 120 }}
+                        />
+                        <View style={{}}>
+                            <Text style={{ width: "80%", padding: 6, alignItems: "center", fontSize: 16 }}>{item.tenSp}</Text>
+                            <View style={{ width: 310, flexDirection: "row", justifyContent: "space-between" }}>
+                                {item.sale <= 0 ?
+                                    <Text style={{
+                                        fontSize: 16,
+                                        fontWeight: '600',
+                                        color: 'red'
+                                    }}>
+
+                                        {price(item.giaSanPham)}
+                                    </Text>
+                                    :
+                                    <View style={{
+                                        flexDirection: 'row', marginLeft: 4
+
+
+                                    }}>
+                                        <Text style={{
+                                            fontSize: 14,
+                                            fontWeight: '600',
+                                            color: '#696969',
+                                            textDecorationLine: 'line-through'
+                                        }}>
+
+                                            {price(item.giaSanPham)}
+                                        </Text>
+
+                                        <Text style={{
+                                            fontSize: 18,
+                                            marginLeft: 5,
+                                            marginRight: 5
+                                        }}>-</Text>
+                                        <Text style={{
+                                            fontSize: 15,
+                                            fontWeight: '600',
+                                            color: '#B22222',
+
+                                        }}>
+
+                                            {price(item.giaSanPham - (item.giaSanPham * (item.sale / 100)))}
+                                        </Text>
+                                    </View>
+                                }
+
+                            </View>
+
+                        </View>
+                    </View>
+
+                </TouchableOpacity>
+            )
+        })
+    }
+
+    onAddToCart = async () => {
+
+        let id = info.id
+        // console.log("Ok")
+        if (detailProduct.soLuong > 0) {
+            if (id && idProduct) {
+                if (soLuong > 0 && size !== "") {
+                    let data = {
+                        idUser: id,
+                        idSP: idProduct,
+                        size: size,
+                        soLuong: soLuong
+                    }
+                    await axios.post(POST_CART_USER, data).then(res => {
+                        if (res.data.errCode === 0) {
+                            Alert.alert('Thông báo', 'Đơn hàng đã được thêm vào giỏ hàng', [
+                                {
+                                    text: 'OK', onPress: () => {
+                                        navigation.navigate('Home');
+                                    }
+                                },
+                            ]);
+                        }
+                    }).catch((err) => { console.log(err) })
+                } else {
+
+                    return Alert.alert('Thông báo', 'bạn chưa chọn số lượng hoặc size', [
+                        {
+                            text: 'OK', onPress: () => {
+
+                            }
+                        },
+                    ]);
+
+                }
+
+            }
+        } else {
+            return Alert.alert('Thông báo', 'Xin lỗi quý khách vì sản phẩm đã không còn hàng, chúng tôi sẽ cố gắng nhập hàng sớm nhất có thể', [
+                {
+                    text: 'OK', onPress: () => {
+
+                    }
+                },
+            ]);
+        }
+
     }
 
     return (
@@ -133,6 +286,7 @@ const ProductDetail = (props) => {
 
                             </View>
                             <ScrollView
+                                onScroll={({ nativeEvent }) => onchange(nativeEvent)}
                                 showsHorizontalScrollIndicator={false}
                                 pagingEnabled
                                 horizontal
@@ -347,7 +501,7 @@ const ProductDetail = (props) => {
                                     <Text style={{ textAlign: 'center', fontSize: 17, textTransform: 'uppercase', fontWeight: 'bold', color: 'white' }}>Liên Hệ</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    // onPress={()=>{onAddToCart()}} 
+                                    onPress={() => { onAddToCart() }}
                                     style={{ marginTop: 10, marginLeft: 20, borderColor: 'orange', borderRadius: 7, padding: 10, width: 150, flexDirection: "row", justifyContent: 'center', alignItems: 'center', backgroundColor: 'orange', }}>
                                     <Text style={{ textAlign: 'center', fontSize: 17, textTransform: 'uppercase', fontWeight: 'bold', color: 'white' }}>Giỏ Hàng</Text>
                                 </TouchableOpacity>
@@ -356,7 +510,7 @@ const ProductDetail = (props) => {
                         </View>
                         <View>
                             <TouchableOpacity
-                            // onPress={()=>{setXemChiTiet(!xemChiTiet)}}
+                                onPress={() => { setXemChiTiet(!xemChiTiet) }}
                             >
                                 <Text style={{
                                     fontWeight: 'bold',
@@ -373,8 +527,8 @@ const ProductDetail = (props) => {
                                 width: '100%',
                                 padding: 7,
                                 paddingBottom: 10,
-                                // height:xemChiTiet?"auto":200
-                                height: 200,
+                                height: xemChiTiet ? "auto" : 400,
+
 
 
                             }}>
@@ -437,11 +591,11 @@ const ProductDetail = (props) => {
 
 
                             }}>Sản phẩm khác: </Text>
-                            {/* <ScrollView>
-                            {
-                               listSanPhamKhac()
-                            }
-                        </ScrollView> */}
+                            <ScrollView style={{marginBottom:100}}>
+                                {
+                                    listSanPhamKhac()
+                                }
+                            </ScrollView>
                         </View>
                     </SafeAreaView>
                 </ScrollView>

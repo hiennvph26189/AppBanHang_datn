@@ -67,3 +67,9 @@ export const GET_XA = URL+'api-app/xa'
 export const POST_ADDRESS_MEMBERS= URL+'api-app/address-member'
 //get Địa chỉ
 export const GET_ADDRESS_MEMBERS = URL+'api-app/get-address-member'
+//sửa địa chỉ
+export const UPDATE_ADDRESS_MEMBERS = URL+'api-app/put-address-member'
+//xóa địa chỉ
+export const DELETE_ADDRESS_MEMBERS = URL+'api-app/delete-address-member'
+//suawr
+export const UPDATE_STATUS_ADDRESS_MEMBERS=URL+'api-app/edit-status-address-member'

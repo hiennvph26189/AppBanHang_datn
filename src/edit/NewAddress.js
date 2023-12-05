@@ -5,12 +5,12 @@ import Header from '../common/Header'
 import CommonButton from '../common/CommonButton'
 import { useNavigation } from '@react-navigation/native'
 import SelectDropdown from 'react-native-select-dropdown'
-import { GET_TINH_THANH, GET_QUAN, GET_XA,POST_ADDRESS_MEMBERS } from '../../API'
+import { GET_TINH_THANH, GET_QUAN, GET_XA, POST_ADDRESS_MEMBERS } from '../../API'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 
 const NewAddress = () => {
-    const info  = useSelector(state => state.Reducers.arrUser);
+    const info = useSelector(state => state.Reducers.arrUser);
     const navigation = useNavigation();
     const [hoten, setHoTen] = useState('');
     const [badHoTen, setBadHoTen] = useState(false);
@@ -67,7 +67,7 @@ const NewAddress = () => {
 
     }, [])
 
-    const newAddress = async() => {
+    const newAddress = async () => {
         const phoneNumber = /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/;
         if (hoten == '') {
             setBadHoTen(true);
@@ -119,15 +119,15 @@ const NewAddress = () => {
         } else {
             setBadAddress(false)
         }
-        const data ={
+        const data = {
             id_member: info.id,
             hoTen: hoten,
             soDienThoai: phone,
-            diaChi: address + ', '+tenXa+', '+tenQuan+', '+tenTinh
+            diaChi: address + ', ' + tenXa + ', ' + tenQuan + ', ' + tenTinh
         }
-       await axios.post(POST_ADDRESS_MEMBERS,data).then((res)=>{
-            console.log(res.data+'Ssss');
-            if(res.data.errCode==0){
+        await axios.post(POST_ADDRESS_MEMBERS, data).then((res) => {
+            console.log(res.data + 'Ssss');
+            if (res.data.errCode == 0) {
                 ToastAndroid.showWithGravity(
                     'Thêm địa chỉ thành công',
                     ToastAndroid.SHORT,
@@ -163,10 +163,11 @@ const NewAddress = () => {
                     value={hoten}
                     onChangeText={(text) => setHoTen(text)}
                 />
-                {
-                    badHoTen == true && (<Text style={{ marginTop: 10, marginLeft: 40, color: 'red' }}>{error}</Text>)
-                }
+
             </View>
+            {
+                badHoTen == true && (<Text style={{ marginTop: 10, marginLeft: 40, color: 'red' }}>{error}</Text>)
+            }
             <View style={{ marginHorizontal: 20, backgroundColor: '#e6e6e6', marginTop: 10, borderRadius: 20 }}>
                 <TextInput
                     placeholder="Phone Number"
@@ -182,10 +183,11 @@ const NewAddress = () => {
                     value={phone}
                     onChangeText={(text) => setPhone(text)}
                 />
-                {
-                    badphone == true && (<Text style={{ marginTop: 10, marginLeft: 40, color: 'red' }}>{error}</Text>)
-                }
+
             </View>
+            {
+                badphone == true && (<Text style={{ marginTop: 10, marginLeft: 40, color: 'red' }}>{error}</Text>)
+            }
             <View style={{
                 flexDirection: 'row', marginTop: 15,
                 padding: 8,
