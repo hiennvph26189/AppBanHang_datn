@@ -2,7 +2,7 @@ import { View, Text,Alert, Image, TouchableOpacity } from "react-native"
 import {Avatar} from "react-native-paper"
 import React, { useEffect } from "react";
 import axios from "axios";
-import {POST_CART_USER} from "../../API"
+import {GET_CART_USER,POST_CART_USER} from "../../api"
 import {useDispatch, useSelector} from 'react-redux'
 import { useNavigation,useIsFocused } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Foundation"
@@ -40,7 +40,7 @@ const MyProductItem = (props) => {
                 let data = {
                     idUser: id,
                     idSP: item.id,
-                    size: item.idDanhSach === 56?"40":"M",
+                    size:item.idDanhSach === 56?"40": "M",
                     soLuong:1
                 }
                 await axios.post(POST_CART_USER,data).then(res =>{
@@ -61,7 +61,7 @@ const MyProductItem = (props) => {
         }
     }
     handleDetailProduct = (id)=>{
-        navigation.navigate('ProductDetail',{id: id},{handleDetailProduct:{handleDetailProduct}});
+        navigation.navigate('Chi tiết sản phẩm',{id: id},{handleDetailProduct:{handleDetailProduct}});
     }
     return (
         <TouchableOpacity  onPress={()=>{handleDetailProduct(item.id)}} style={{
