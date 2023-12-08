@@ -15,6 +15,7 @@ const ItemAddress = (props) => {
     const info = useSelector(state => state.Reducers.arrUser);
 
     const [checked, setChecked] = useState('');
+    
     const setChecked1 = async () => {
         const data = {
             id: id,
@@ -35,6 +36,8 @@ const ItemAddress = (props) => {
 
     const deleteItem = async () => {
         await axios.delete(`${DELETE_ADDRESS_MEMBERS}?id=${id}&id_member=${info.id}`).then((res) => {
+           
+            console.log(res.data.errCode+'deleted');
             if (res.data.errCode == 0) {
                 ToastAndroid.showWithGravity(
                     'Xóa địa chỉ thành công',
@@ -50,14 +53,18 @@ const ItemAddress = (props) => {
         Alert.alert(
             'Thông báo',
             `Bạn có chắc chắn muốn xóa địa chỉ này không?`,
-            [{ text: 'OK', onPress: () => deleteItem() }],
+            [{ text: 'Cancel' },
+            { text: 'OK', onPress: () => deleteItem() }
+            
+        ],
+            
             { cancelable: false }
         );
         console.log(props);
     }
-    // useEffect(()=>{
-    //     console.log(props.key);
-    // },[])
+    useEffect(()=>{
+        props.loadData()
+    },[])
 
     const formatPhoneNumber = (phoneNumber) => {
         // Định dạng số điện thoại thành 'XXXX XXX XXX'

@@ -37,8 +37,10 @@ const NewAddress = () => {
 
     const choiceTinh = async () => {
         await axios.get(GET_TINH_THANH).then((res) => {
+            console.log(res.data.listTinhThanh+' tinhThanh');
             if (res.data.errCode == 0) {
                 res.data.listTinhThanh.map((item, index) => {
+                    
                 })
                 setTinhThanh(res.data.listTinhThanh)
             }

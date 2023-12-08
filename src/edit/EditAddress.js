@@ -13,8 +13,6 @@ const EditAddress = (props) => {
     const route = props.route;
     let item = route.params.item;
 
-    console.log(item.hoTen + ' itemaddress');
-
     const navigation = useNavigation();
     const [hoten, setHoTen] = useState('');
     const [badHoTen, setBadHoTen] = useState(false);

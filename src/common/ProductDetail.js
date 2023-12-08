@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import CustomHeader from '../common/CustomHeader';
 import RenderHTML from 'react-native-render-html';
+import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 
 
 const images = [
@@ -283,8 +284,18 @@ const ProductDetail = (props) => {
                                     fontWeight: 'bold',
                                     fontSize: 16,
                                 }}>{detailProduct ? detailProduct.tenSp : ""}</Text>
-
+                                <TouchableOpacity style={{
+                                    width:40,
+                                    height:40,
+                                    backgroundColor:'#fff',
+                                    borderRadius:20,
+                                    elevation:5,
+                                    position:'absolute',
+                                }}>
+                                    <Icon name="heart-outline" size={30} color='#000' style={{top:5,left:5}}/>
+                                </TouchableOpacity>
                             </View>
+                            
                             <ScrollView
                                 onScroll={({ nativeEvent }) => onchange(nativeEvent)}
                                 showsHorizontalScrollIndicator={false}

@@ -26,7 +26,7 @@ const Home = (props) => {
 
     const setSelectedTab1 = () => {
         setSelectedTab(0);
-        console.log(length+"LEEngth");
+        console.log(length + "LEEngth");
         console.log(info);
     }
 
@@ -46,6 +46,9 @@ const Home = (props) => {
         }
         setLenght(count)
     }
+    const updateLenht = () => {
+        setLenght(0)
+    }
     const deleteCart = () => {
         listCart()
     }
@@ -54,15 +57,17 @@ const Home = (props) => {
     }
 
     useEffect(() => {
-        listCart();
+        if (info.id) {
+            listCart()
+        }
         if (setTabNavigation) {
             setSelectedTab(setTabNavigation)
         }
 
-    }, [isFocused])
+    }, [isFocused, selectedTab]);
     return (
         <View style={{ flex: 1 }}>
-            {selectedTab == 0 ? (<Main addCart={addCart} />) : selectedTab == 1 ? (<Contact />) : selectedTab == 2 ? (<Cart deleteCart={deleteCart} />) : selectedTab == 3 ? (<News />) : (<Profile setSelectedTab1={setSelectedTab1} />)}
+            {selectedTab == 0 ? (<Main addCart={addCart} />) : selectedTab == 1 ? (<Contact />) : selectedTab == 2 ? (<Cart deleteCart={deleteCart} />) : selectedTab == 3 ? (<News />) : selectedTab == 4 && (<Profile setSelectedTab1={setSelectedTab1} updateLenht={updateLenht} />)}
             <View style={{
                 width: '100%',
                 height: 50,

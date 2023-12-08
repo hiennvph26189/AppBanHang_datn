@@ -4,7 +4,7 @@ import { RadioButton } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native'
 import CustomTextInput from '../common/CustomTextInput';
 import CommonButton from '../common/CommonButton';
-import { ADDMENBER } from '../../API';
+import { ADD_MENBER } from '../../API';
 import axios from 'axios';
 
 const Signup = () => {
@@ -119,7 +119,7 @@ const Signup = () => {
             diaChi: address,
             matKhau: repassword,
         }
-        axios.post(ADDMENBER, data).then(res => {
+        axios.post(ADD_MENBER, data).then(res => {
             if (res.data.errCode === 1) {
                 setBadEmail(true)
                 setErrMessage(res.data.errMessage)
@@ -148,6 +148,7 @@ const Signup = () => {
                 >Create New Account</Text>
                 <CustomTextInput
                     value={phone}
+                    type = "number-pad"
                     onChangeText={text => { setPhone(text); }}
                     placeholder={"Xin Nhập Số Điện Thoại"} icon={require('../images/phone1.png')}>
                 </CustomTextInput>

@@ -1,4 +1,4 @@
-import { View, SafeAreaView, ScrollView, RefreshControl, StyleSheet, Button, Pressable, Image, ToastAndroid } from "react-native";
+import { View, SafeAreaView, ScrollView, RefreshControl, StyleSheet, Button, Pressable, Image, ToastAndroid,TouchableOpacity } from "react-native";
 import { Avatar, Title, Caption, Text, TouchableRipple } from "react-native-paper"
 import { React, useEffect, useState } from "react";
 import { useNavigation, useIsFocused } from "@react-navigation/native";
@@ -178,7 +178,7 @@ const Profile = (props) => {
                                 </View>
 
                             </TouchableRipple>
-                            <TouchableRipple onPress={()=>{navigation.navigate('ListAddress')}}>
+                            <TouchableRipple onPress={() => { navigation.navigate('ListAddress') }}>
                                 <View style={styles.menuItem}>
                                     <Icon name="credit-card" color="#000" size={25} />
                                     <Text style={styles.menuItemText}>
@@ -187,7 +187,7 @@ const Profile = (props) => {
                                 </View>
 
                             </TouchableRipple>
-                            <TouchableRipple onPress={()=>{navigation.navigate('NewAddress')}}>
+                            <TouchableRipple onPress={() => { navigation.navigate('NewAddress') }}>
                                 <View style={styles.menuItem}>
                                     <Icon name="history" color="#000" size={25} />
                                     <Text style={styles.menuItemText}>
@@ -237,14 +237,44 @@ const Profile = (props) => {
                     </ScrollView>
                 </SafeAreaView>
                 :
-                <View style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'center', marginTop: 500 }}>
-                    <Button
-                        title="Login"
-                        onPress={() => {
-                            Login();
-                        }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', alignSelf: 'center', flex:1 }}>
+                    
 
-                    </Button>
+                    <Icon name="alert" color="#ff0000" size={50} />
+                    <Text style={{marginTop:10, maxWidth:300, marginLeft:7, fontSize:16, fontVariant:'500'}}>
+                        Bạn chưa đăng nhập! vui lòng đăng nhập để sử dụng đầy đủ chức năng 
+                    </Text>
+                    <View style={{flexDirection:'row'}}>
+                    <TouchableOpacity
+                        onPress={() => { Login() }}
+                        style={{
+                            backgroundColor: '#000',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            width: 150,
+                            height: 50,
+                            borderRadius: 50,
+                            alignSelf: 'center',
+                            marginTop: 50,
+                            marginRight:30,
+                        }}>
+                        <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600' }}>Đăng nhập</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => { navigation.navigate('Signup') }}
+                        style={{
+                            backgroundColor: '#000',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            width: 150,
+                            height: 50,
+                            borderRadius: 50,
+                            alignSelf: 'center',
+                            marginTop: 50,
+                        }}>
+                        <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600' }}>Đăng ký</Text>
+                    </TouchableOpacity>
+                    </View>
                 </View>
             }
 
