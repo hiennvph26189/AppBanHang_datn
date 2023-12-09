@@ -262,7 +262,7 @@ const Signup = () => {
                 >
                 </CommonButton>
                 <Text style={{ fontSize: 18, fontWeight: '800', alignSelf: "center", marginTop: 20, textDecorationLine: "underline", marginBottom: 50 }}
-                    onPress={() => { navigation.goBack(); }} > Already Have Account</Text>
+                    onPress={() => { navigation.navigate('Login'); }} > Already Have Account</Text>
             </View>
         </ScrollView>
     );

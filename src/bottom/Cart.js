@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, Alert, ScrollView, RefreshControl, Pressable, Linking } from 'react-native'
 import React, { useState } from 'react'
 import CartItem from '../common/CartItem';
 import { useDispatch, useSelector } from 'react-redux';
@@ -64,7 +64,7 @@ const Cart = (props) => {
     if (info.id) {
       let idUser = info.id;
       await axios.get(`${GET_CART_USER}?id=${idUser}`).then(res => {
-
+        console.log(res.data.Carts+ ' cart');
         if (res.data.errCode == 0) {
           setCartList(res.data.Carts)
 
@@ -155,7 +155,7 @@ const Cart = (props) => {
       await axios.post(CHECK_SOLUONG_SP_THEOSIZE_TRONG_ODER, postData).then(res => {
 
         if (res.data.success == true) {
-          navigation.navigate("ChiTietDonHangThanhToan", { postData: postData, arrTenSp: arrTenSp, tongTiens: tongTiens, IP: IP })
+          navigation.navigate('ChiTietDonHangThanhToan', { postData: postData, arrTenSp: arrTenSp, tongTiens: tongTiens, IP: IP })
         } else {
 
           alert(res.data.message)

@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text,TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
 import { GET_ADDRESS_MEMBERS } from '../../API';
 import ItemAddress from './ItemAddress';
@@ -6,7 +6,6 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import CustomHeader from './CustomHeader';
 

@@ -40,6 +40,11 @@ const ProductDetail = (props) => {
     const [soLuong, setSoLuong] = useState(0);
     const [xemChiTiet, setXemChiTiet] = useState(true)
     const [refreshing, setRefreshing] = useState(false);
+    const [like, setLike] = useState('');
+
+    const toggleLike = () => {
+        setLike(!like);
+    };
 
 
     const lienHe = () => {
@@ -149,7 +154,7 @@ const ProductDetail = (props) => {
         return arrSanPhamKhac.map((item) => {
             return (
                 <TouchableOpacity
-                 onPress={() => { orProduct(item.id) }} key={item.id}>
+                    onPress={() => { orProduct(item.id) }} key={item.id}>
                     <View style={{ flexDirection: "row", margin: 5, borderBottomColor: "#ccc", borderBottomWidth: .7 }}>
                         <Image
                             source={{ uri: showImage(item.image) }}
@@ -284,18 +289,27 @@ const ProductDetail = (props) => {
                                     fontWeight: 'bold',
                                     fontSize: 16,
                                 }}>{detailProduct ? detailProduct.tenSp : ""}</Text>
-                                <TouchableOpacity style={{
-                                    width:40,
-                                    height:40,
-                                    backgroundColor:'#fff',
-                                    borderRadius:20,
-                                    elevation:5,
-                                    position:'absolute',
-                                }}>
-                                    <Icon name="heart-outline" size={30} color='#000' style={{top:5,left:5}}/>
+                                <TouchableOpacity
+                                    style={{
+                                        width: 40,
+                                        height: 40,
+                                        backgroundColor: '#fff',
+                                        borderRadius: 20,
+                                        elevation: 5,
+                                        position: 'absolute',
+                                        right: 10, 
+                                        marginRight:10,
+                                    }}
+                                    onPress={toggleLike}
+                                >
+                                    {like ? (
+                                        <Icon name="heart" size={30} color="red" style={{ top: 5, left: 5 }} />
+                                    ) : (
+                                        <Icon name="heart-outline" size={30} color="#000" style={{ top: 5, left: 5 }} />
+                                    )}
                                 </TouchableOpacity>
                             </View>
-                            
+
                             <ScrollView
                                 onScroll={({ nativeEvent }) => onchange(nativeEvent)}
                                 showsHorizontalScrollIndicator={false}
@@ -484,7 +498,10 @@ const ProductDetail = (props) => {
                                                 name="plus-square"
                                             />
                                         </TouchableOpacity>
+
                                     }
+
+
                                 </View>
                             </View>
 
@@ -602,7 +619,7 @@ const ProductDetail = (props) => {
 
 
                             }}>Sản phẩm khác: </Text>
-                            <ScrollView style={{marginBottom:100}}>
+                            <ScrollView style={{ marginBottom: 100 }}>
                                 {
                                     listSanPhamKhac()
                                 }

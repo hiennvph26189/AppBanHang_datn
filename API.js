@@ -62,24 +62,24 @@ export const DELETE_TIEN_DA_NAP = URL+"api/delete-nap-tien-Member"
 
 export const THANH_TOAN_9PAY = 'https://shopacc12312.000webhostapp.com/thongtinkhachhang.php'
 
-export const ORDER_CARD_9PAY = URL+ '/api-app/post-order-product-9pay-card'
+export const ORDER_CARD_9PAY = URL+ 'api-app/post-order-product-9pay-card'
 // List size theo product
-export const LIST_SIZE_IN_PRODUCT = URL+ '/api-app/list-products-size'
+export const LIST_SIZE_IN_PRODUCT = URL+ 'api-app/list-products-size'
 // List sản phẩm theo  cart và size
-export const LIST_SIZE_IN_CART_PRODUCT = URL+ '/api-app/list-cart-products-size'
+export const LIST_SIZE_IN_CART_PRODUCT = URL+ 'api-app/list-cart-products-size'
 // check số lượng sản phẩm theo size và cart
-export const CHECK_SOLUONG_SP_THEOSIZE_TRONG_ODER = URL+ '/api-app/Check-soluong-sanpham-theo-size'
+export const CHECK_SOLUONG_SP_THEOSIZE_TRONG_ODER = URL+ 'api-app/Check-soluong-sanpham-theo-size'
 //
-export const RESET_CART_ORDER = URL+ '/api-app/post-reset-cart'
+export const RESET_CART_ORDER = URL+ 'api-app/post-reset-cart'
 // list size products
-export const LIST_SIZE_PRODUCTS = URL+ '/api-app/list-products-size'
+export const LIST_SIZE_PRODUCTS = URL+ 'api-app/list-products-size'
 // get one product in cart vote star
-export const GET_ONE_PRODUCT_IN_CART_VOTE_START = URL+ '/api-app/get-product-cart-vote-star'
+export const GET_ONE_PRODUCT_IN_CART_VOTE_START = URL+ 'api-app/get-product-cart-vote-star'
 // post vote star
-export const POST_VOTE_START = URL+ '/api-app/post-vote-star-product'
+export const POST_VOTE_START = URL+ 'api-app/post-vote-star-product'
 // check star product
-export const CHECK_STAR_PRODUCT = URL+ '/api-app/check-vote-star'
-export const GET_TOTAL_STAR_TB_STAR_PRODUCT = URL+ '/api-app/get-total-star-product'
+export const CHECK_STAR_PRODUCT = URL+ 'api-app/check-vote-star'
+export const GET_TOTAL_STAR_TB_STAR_PRODUCT = URL+ 'api-app/get-total-star-product'
 // get danh sách tỉnh thành
 export const GET_TINH_THANH = URL +'api-app/tinhThanh';
 //get quận huyện
@@ -97,8 +97,8 @@ export const DELETE_ADDRESS_MEMBERS = URL+'api-app/delete-address-member'
 //suawr
 export const UPDATE_STATUS_ADDRESS_MEMBERS=URL+'api-app/edit-status-address-member'
 //
-export const GET_PRODUCT_CART_MEMBER=URL+'/api-app/get-cart-product-in-idmember'
+export const GET_PRODUCT_CART_MEMBER=URL+'api-app/get-cart-product-in-idmember'
 // get item address menber 
-export const ITEM_ADDRESS_MEMBER=URL+'/api-app/get-item-address-in-idmember'
+export const ITEM_ADDRESS_MEMBER=URL+'api-app/get-item-address-in-idmember'
 // item address order detail
-export const ITEM_ADDRESS_ORDER_DETAIL=URL+'/api-app/get-item-address-order-detail'
+export const ITEM_ADDRESS_ORDER_DETAIL=URL+'api-app/get-item-address-order-detail'

@@ -32,34 +32,44 @@ const ItemLuotMua = (props) => {
         x = x.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
         return x;
     }
-    onAddToCart = async (item) => {
-        let id = info.id
+    onAddToCart= async(item)=>{
+     
+        let id =  info.id
         // console.log("Ok")
-        if (id && item.id) {
-            if (item.soLuong > 0) {
+        if(id&&item.id){
+         
                 let data = {
-                    idUser: id,
-                    idSP: item.id,
-                    size: "M",
-                    soLuong: 1
+                    id_member: id,
+                    id_product: item.id,
+                    soLuong:1,
+                    size: ""
                 }
-                await axios.post(POST_CART_USER, data).then(res => {
-                    if (res.data.errCode === 0) {
+                await axios.post(POST_CART_USER,data).then(res =>{
+                    
+                    if(res.data.errCode === 0 ){
+                        
                         props.addCart()
+                    }else{
+                        Alert.alert('Thông báo',res.data.errMessage , [
+                            {text: 'OK', onPress: () => {
+                               
+                            }},
+                          ]);
                     }
                 })
-            } else {
-
-                Alert.alert('Thông báo', 'Xin lỗi quý khách vì sản phẩm đã không còn hàng, chúng tôi sẽ cố gắng nhập hàng sớm nhất có thể', [
-                    {
-                        text: 'OK', onPress: () => {
-
-                        }
-                    },
-                ]);
-
-            }
-
+           
+           
+        }else{
+           return Alert.alert(
+            'Thông báo',
+            'Bạn chưa đăng nhập',
+            [
+                {
+                    text: 'OK',
+                },
+            ],
+            { cancelable: false }
+        );
         }
     }
     handleDetailProduct = (id) => {

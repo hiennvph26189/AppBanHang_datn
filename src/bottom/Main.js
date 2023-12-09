@@ -23,7 +23,7 @@ const Main = (props) => {
     //sản phẩm bán nhiều nhất
     const getHot = async () => {
         await axios.get(LIST_HOST_ODERS_PRODUCTS).then((res) => {
-            console.log(res.data + 'hotbuy');
+
             if (res.data.errCode === 0) {
 
                 setListHotBuy(res.data.hotOrdersProducts)
@@ -43,7 +43,7 @@ const Main = (props) => {
     //hot sale
     const getHotSale = async () => {
         await axios.get(LIST_HOST_SALES_PRODUCTS).then((res) => {
-            console.log(res.data + ' hot sales');
+
             if (res.data.errCode === 0) {
 
                 setSaleProduct(res.data.saleProduct)
@@ -54,7 +54,7 @@ const Main = (props) => {
     //sản phẩm mới nhất
     const getNewProduct = async () => {
         await axios.get(GET_NEW_PRODUCTS).then((res) => {
-            console.log(res.data+ 'new product');
+
             if (res.data.errCode === 0) {
 
                 setNewProduct(res.data.newProduct)
@@ -65,7 +65,7 @@ const Main = (props) => {
     // sản phẩm theo danh mục sản phẩm
     const getProductCate = async () => {
         await axios.get(LIST_PRODUCTS_IN_CATEGORIES).then((res) => {
-            console.log(res.data.dataProducts + 'ca');
+
             if (res.data.errCode === 0) {
 
                 setListCategoryProduct(res.data.dataProducts)

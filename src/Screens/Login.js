@@ -79,9 +79,9 @@ const Login = () => {
   }
   return (
     <>
-    <CustomHeader 
+    {/* <CustomHeader 
     title={'Login'}
-    />
+    /> */}
     <View style={{ flex: 1 }}>
       <Image
         source={require('../images/LogoChao.png')}
@@ -131,6 +131,7 @@ const Login = () => {
       <CommonButton title={'Login'} bgColor={'#000'} textColor={'#fff'} onPress={() => {
         validate()
       }}></CommonButton>
+      <View style={{}}>
       <Text
         style={{
           fontSize: 18,
@@ -140,7 +141,19 @@ const Login = () => {
           textDecorationLine: 'underline',
         }} onPress={() => {
           navigation.navigate('Signup');
-        }}>Create New Account?</Text>
+        }}>Create New Account</Text>
+
+        {/* <Text style={{
+          fontSize: 18,
+          fontWeight: '800',
+          alignSelf: 'center',
+          marginTop: 20,
+          color:'green',
+          textDecorationLine: 'underline',
+        }}
+        onPress={()=>{navigation.navigate('Home')}}
+        >Về trang chủ ?</Text> */}
+      </View>
     </View>
     </>
   )
