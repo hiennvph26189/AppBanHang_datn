@@ -54,10 +54,16 @@ const Home = (props) => {
     }
 
     useEffect(() => {
-        listCart();
-        if (setTabNavigation) {
-            setSelectedTab(setTabNavigation)
+        if(info.id == undefined){
+            setLenght(0)
         }
+        if(info.id){
+            listCart()
+        }  
+        // listCart();
+        // if (setTabNavigation) {
+        //     setSelectedTab(setTabNavigation)
+        // }
 
     }, [isFocused])
     return (
