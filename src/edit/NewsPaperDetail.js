@@ -1,9 +1,8 @@
-import { View, Text, Dimensions,useWindowDimensions,Image } from 'react-native'
+import { View, Text, Dimensions,useWindowDimensions,Image,ScrollView } from 'react-native'
 import React from 'react'
 import RenderHTML from 'react-native-render-html';
 import moment from 'moment';
 import fr from "moment/locale/fr";
-import { ScrollView } from 'react-native-gesture-handler';
 import Header from '../common/Header';
 import CustomHeader from '../common/CustomHeader';
 const NewsPaperDetail = (props) => {

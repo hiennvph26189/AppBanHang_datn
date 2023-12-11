@@ -30,7 +30,7 @@ const ListLikeProducts = (props) => {
   return (
    <>
    <CustomHeader 
-   title={'Danh sách sản phẩm yêu thích'}/>
+   title={'Sản phẩm yêu thích'}/>
     {/* {listLike && listLike.map((item) => {
           return (
             <ItemLike

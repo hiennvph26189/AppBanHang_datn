@@ -22,7 +22,7 @@ export const GET_NEW_PRODUCTS = URL+"api-app/list-new-product"
 //nap tien
 export const NAPTIENMEMBER = URL+"api/naptien-members"
 //get lịch sử nạp tiền
-export const LICHSUNAPTIENMEMBER = URL+"api/lich-su-naptien-members"
+export const LICH_SU_NAP_TIEN_MEMBER = URL+"api/lich-su-naptien-members"
 //get danh mục sản phẩm
 export const GET_CATEGORIES = URL+"api/get-all-categories"
 // get tất cả sản phẩm trong trang chủ
