@@ -89,6 +89,7 @@ const Main = (props) => {
     danhSachSabPham = (id, name) => {
 
         navigation.navigate('ListProducts', { id: id, name: name });
+        
     }
     const litProducts = () => {
         return (
