@@ -192,6 +192,7 @@ const Main = (props) => {
 
                             </View>
                             <ScrollView ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ marginTop: 20 }}>
+                                
                                 {listNewProduct && listNewProduct.map((item) => {
                                     return (
 
@@ -199,7 +200,9 @@ const Main = (props) => {
                                             item={item}
                                             addCart={addCart}
                                         />
+                                        
                                     )
+                                    
                                 })}
 
                             </ScrollView>

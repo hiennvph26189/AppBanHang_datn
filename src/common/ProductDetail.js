@@ -1,7 +1,7 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions, ScrollView, useWindowDimensions, Alert, TextInput, Pressable } from 'react-native'
+import { View, Text, Image, TouchableOpacity, StyleSheet, SafeAreaView, Dimensions, ScrollView, useWindowDimensions, Alert, TextInput, Pressable, ToastAndroid } from 'react-native'
 import React, { useState } from 'react'
 import { FontAwesome } from '@expo/vector-icons';
-import { GET_CATEGORIES, POST_CART_USER, GET_ONE_PRODUCT } from '../../API';
+import { GET_CATEGORIES, POST_CART_USER, GET_ONE_PRODUCT, LIKE_PRODUCTS, DELETE_LIKE_PRODUCTS, GET_ONE_LIKE_PRODUCT } from '../../API';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -26,7 +26,7 @@ const ProductDetail = (props) => {
     const isFocused = useIsFocused();
     const navigation = useNavigation();
     const route = props.route;
-    let idProduct = route.params.id;
+    const idProduct = route.params.id;
     const { width } = useWindowDimensions();
 
     const info = useSelector(state => state.Reducers.arrUser);
@@ -40,11 +40,68 @@ const ProductDetail = (props) => {
     const [soLuong, setSoLuong] = useState(0);
     const [xemChiTiet, setXemChiTiet] = useState(true)
     const [refreshing, setRefreshing] = useState(false);
-    const [like, setLike] = useState('');
+    const [like, setLike] = useState(false);
 
-    const toggleLike = () => {
-        setLike(!like);
+    const toggleLike = async () => {
+        console.log(info.id +' id');
+        if (info.id != undefined) {
+            const data = {
+                id_product: idProduct,
+                id_member: info.id,
+            }
+            console.log('IDproduct' + LIKE_PRODUCTS);
+            await axios.post(LIKE_PRODUCTS, data).then((res) => {
+                console.log(res.data + 'Ssss');
+                if (res.data.errCode == 0) {
+                    ToastAndroid.showWithGravity(
+                        'Thêm vào danh sách yêu thích thành công',
+                        ToastAndroid.SHORT,
+                        ToastAndroid.BOTTOM, 25, 50,
+                    );
+                    getOneLikeProd(idProduct, info.id)
+                }
+
+            })
+        } else {
+            return Alert.alert('Thông báo', 'Bạn chưa đăng nhập', [
+                {
+                    text: 'OK', onPress: () => {
+
+                    }
+                },
+            ]);
+        }
+
+
     };
+
+    const xoaLike_product = async () => {
+
+        await axios.delete(`${DELETE_LIKE_PRODUCTS}?id_product=${idProduct}&id_member=${info.id}`).then((res) => {
+            console.log(res.data + ' deleted');
+            if (res && res.data.errCode === 0) {
+                ToastAndroid.showWithGravity(
+                    'Xóa sản phẩm yêu thích thành công',
+                    ToastAndroid.SHORT,
+                    ToastAndroid.BOTTOM, 25, 50,
+                );
+                getOneLikeProd(idProduct, info.id)
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+    const getOneLikeProd = async (id_product, id_member) => {
+        await axios.get(`${GET_ONE_LIKE_PRODUCT}?id_product=${id_product}&id_member=${id_member}`).then((res) => {
+            if (res && res.data.errCode === 0) {
+                setLike(true)
+            } else {
+                setLike(false)
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
 
 
     const lienHe = () => {
@@ -81,6 +138,10 @@ const ProductDetail = (props) => {
     useEffect(() => {
         getDetailProduct();
         loadCategory();
+        if (info.id != undefined) {
+            getOneLikeProd(idProduct, info.id)
+        }
+
     }, [isFocused])
 
     const onchange = (nativeEvent) => {
@@ -289,25 +350,46 @@ const ProductDetail = (props) => {
                                     fontWeight: 'bold',
                                     fontSize: 16,
                                 }}>{detailProduct ? detailProduct.tenSp : ""}</Text>
-                                <TouchableOpacity
-                                    style={{
-                                        width: 40,
-                                        height: 40,
-                                        backgroundColor: '#fff',
-                                        borderRadius: 20,
-                                        elevation: 5,
-                                        position: 'absolute',
-                                        right: 10, 
-                                        marginRight:10,
-                                    }}
-                                    onPress={toggleLike}
-                                >
-                                    {like ? (
+                                {like == true ?
+                                    <TouchableOpacity
+                                        style={{
+                                            width: 40,
+                                            height: 40,
+                                            backgroundColor: '#fff',
+                                            borderRadius: 20,
+                                            elevation: 5,
+                                            position: 'absolute',
+                                            right: 10,
+                                            marginRight: 10,
+                                        }}
+                                        onPress={xoaLike_product}
+                                    >
+
                                         <Icon name="heart" size={30} color="red" style={{ top: 5, left: 5 }} />
-                                    ) : (
+
+
+                                    </TouchableOpacity>
+                                    :
+                                    <TouchableOpacity
+                                        style={{
+                                            width: 40,
+                                            height: 40,
+                                            backgroundColor: '#fff',
+                                            borderRadius: 20,
+                                            elevation: 5,
+                                            position: 'absolute',
+                                            right: 10,
+                                            marginRight: 10,
+                                        }}
+                                        onPress={toggleLike}
+                                    >
+
                                         <Icon name="heart-outline" size={30} color="#000" style={{ top: 5, left: 5 }} />
-                                    )}
-                                </TouchableOpacity>
+                                    </TouchableOpacity>
+                                }
+
+
+
                             </View>
 
                             <ScrollView

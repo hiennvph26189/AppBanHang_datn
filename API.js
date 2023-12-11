@@ -102,3 +102,11 @@ export const GET_PRODUCT_CART_MEMBER=URL+'api-app/get-cart-product-in-idmember'
 export const ITEM_ADDRESS_MEMBER=URL+'api-app/get-item-address-in-idmember'
 // item address order detail
 export const ITEM_ADDRESS_ORDER_DETAIL=URL+'api-app/get-item-address-order-detail'
+//get all sản phẩm yêu thích theo member
+export const GET_ALL_LIKE_PRODUCTS_MEMBER = URL+'api-app/get-like-products'
+//sản phẩm yêu thích
+export const LIKE_PRODUCTS = URL+'api-app/like-products'
+//Xóa sản phẩm yêu tích
+export const DELETE_LIKE_PRODUCTS = URL+'api-app/delete-like-products'
+//get one like product in member
+export const GET_ONE_LIKE_PRODUCT = URL+'api-app/get-one-like-product'

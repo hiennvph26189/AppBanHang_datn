@@ -1,4 +1,4 @@
-import { View, Text,TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
 import { GET_ADDRESS_MEMBERS } from '../../API';
 import ItemAddress from './ItemAddress';

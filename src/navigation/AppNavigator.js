@@ -30,6 +30,7 @@ import { NavigationContainer, useIsFocused } from '@react-navigation/native';
 import Cart from '../bottom/Cart';
 import News from '../bottom/News';
 import Profile from '../bottom/Profile';
+import DanhGiaSanPham from '../common/ItemVote';
 import axios from 'axios';
 import { GET_ONE_MEMBER } from '../../API';
 
@@ -81,6 +82,7 @@ const AppNavigator = () => {
                     <Stack.Screen options={{ headerShown: false }} name='NewAddress' component={NewAddress} ></Stack.Screen>
                     <Stack.Screen options={{ headerShown: false }} name='ListAddress' component={ListAddress} ></Stack.Screen>
                     <Stack.Screen options={{ headerShown: false }} name='EditAddress' component={EditAddress} ></Stack.Screen>
+                    <Stack.Screen options={{ headerShown: false }} name='Đánh giá sản phẩm' component={DanhGiaSanPham} ></Stack.Screen>
                 </Stack.Navigator>
             }
         </>
