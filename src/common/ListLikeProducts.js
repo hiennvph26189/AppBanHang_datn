@@ -1,46 +1,52 @@
-import { View, Text } from 'react-native'
+import { View, Text, ScrollView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { GET_ALL_LIKE_PRODUCTS_MEMBER } from '../../API'
 import CustomHeader from './CustomHeader'
 import { useIsFocused } from '@react-navigation/native'
 import ItemLike from './ItemLike'
+import { useSelector } from 'react-redux'
+import ItemLuotMua from './ItemLuotMua'
 
 const ListLikeProducts = (props) => {
+  const info = useSelector(state => state.Reducers.arrUser);
+  const [listLike, setListLikeProduct] = useState([]);
+  const isFocused = useIsFocused();
 
-    const [listLike, setListLikeProduct] = useState('');
-    const isFocused = useIsFocused();
+  const getAllLikeProduct = async () => {
+    await axios.get(`${GET_ALL_LIKE_PRODUCTS_MEMBER}?id_members=${info.id}`).then((res) => {
+      if (res && res.data.errCode === 0) {
+        setListLikeProduct(res.data.listLikePrd);
+      }
+    }).catch((error) => { console.log(error) });
+  }
 
-    const getAllLikeProduct = async()=>{
-        await axios.get(`${GET_ALL_LIKE_PRODUCTS_MEMBER}?id_members=${info.id}`).then((res) => {
-            if (res && res.data.errCode === 0) {
-                setListLikeProduct(res.data.listLikePrd);
-            }
-          }).catch((error) => { console.log(error) });
-    }
+  useEffect(() => {
+    getAllLikeProduct()
 
-    useEffect(()=>{
-      getAllLikeProduct()
-
-    },[isFocused])
-    const lodaData = () => {
-      console.log('ok');
-      getAllLikeProduct()
-    }
+  }, [isFocused])
+  const lodaData1 = () => {
+    console.log('ok');
+    getAllLikeProduct()
+  }
   return (
-   <>
-   <CustomHeader 
-   title={'Sản phẩm yêu thích'}/>
-    {/* {listLike && listLike.map((item) => {
-          return (
-            <ItemLike
-              key={item.id}
-              item={item}
-
-            />
-          )
-        })} */}
-   </>
+    <>
+      <CustomHeader
+        title={'Sản phẩm yêu thích'} />
+      <ScrollView>
+      {listLike && listLike.map((item) => {
+        return (
+          // <ItemLuotMua key={item.id}
+          //   item={item}
+          //   // addCart={addCart}
+          // />
+          <ItemLike key={item.id}
+          item = {item}
+          />
+        )
+      })}
+      </ScrollView>
+    </>
   )
 }
 

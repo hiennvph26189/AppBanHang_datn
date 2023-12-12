@@ -35,6 +35,7 @@ import axios from 'axios';
 import { GET_ONE_MEMBER } from '../../API';
 import ListLikeProducts from '../common/ListLikeProducts';
 import LichSuNapTien from '../edit/LichSuNapTien';
+import ThongBaoOrder from '../common/ThongBaoOrder';
 
 const Stack = createNativeStackNavigator();
 
@@ -84,6 +85,7 @@ const AppNavigator = () => {
                     <Stack.Screen options={{ headerShown: false }} name='NewAddress' component={NewAddress} ></Stack.Screen>
                     <Stack.Screen options={{ headerShown: false }} name='ListAddress' component={ListAddress} ></Stack.Screen>
                     <Stack.Screen options={{ headerShown: false }} name='EditAddress' component={EditAddress} ></Stack.Screen>
+                    <Stack.Screen options={{ headerShown: false }} name='Thông báo Order' component={ThongBaoOrder} ></Stack.Screen>
                     <Stack.Screen options={{ headerShown: false }} name='Đánh giá sản phẩm' component={DanhGiaSanPham} ></Stack.Screen>
                     <Stack.Screen options={{ headerShown: false }} name='Sản phẩm yêu thích' component={ListLikeProducts} ></Stack.Screen>
                     <Stack.Screen options={{ headerShown: false }} name='LichSuNapTien' component={LichSuNapTien} ></Stack.Screen>
