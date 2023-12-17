@@ -1,14 +1,14 @@
-import { View, Text } from 'react-native'
+import { View, Text,TouchableOpacity } from 'react-native'
 import React, { useEffect } from 'react'
-import { GET_ADDRESS_MEMBERS } from '../../API';
+import { GET_ADDRESS_MEMBERS } from '../../api';
 import ItemAddress from './ItemAddress';
 import axios from 'axios';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ScrollView } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import { useIsFocused, useNavigation } from '@react-navigation/native';
-import CustomHeader from './CustomHeader';
+
 
 const ListAddress = (props) => {
   const navigation = useNavigation();
@@ -31,16 +31,32 @@ const ListAddress = (props) => {
   }, [isFocused])
 
   const lodaData = () => {
-    console.log('ok');
+    
     getAddress()
   }
   return (
     <>
-      <CustomHeader
-        title={'Địa chỉ'} />
+      <View  style={{justifyContent:"flex-end",flexDirection:"row", marginRight:10, marginBottom:5}}>
+        <TouchableOpacity
+            onPress={() => { navigation.navigate('Thêm mới địa chỉ') }}
+            style={{
+              backgroundColor: 'green',
+              justifyContent: 'center',
+              alignItems: 'center',
+             
+              padding:10,
+              borderRadius: 10,
+              alignSelf: 'center',
+              marginTop: 10,
+              
+            }}>
+            <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600', }}>Thêm địa chỉ</Text>
+
+          </TouchableOpacity>
+      </View>
       <ScrollView
         showsHorizontalScrollIndicator={false}
-        style={{ marginTop: 10 }}>
+        style={{ marginTop: 5 }}>
         {address && address.map((item) => {
           return (
             <ItemAddress
@@ -51,22 +67,7 @@ const ListAddress = (props) => {
             />
           )
         })}
-        <TouchableOpacity
-          onPress={() => { navigation.navigate('NewAddress') }}
-          style={{
-            backgroundColor: '#000',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '85%',
-            height: 50,
-            borderRadius: 20,
-            alignSelf: 'center',
-            marginTop: 20,
-            marginBottom: 10
-          }}>
-          <Text style={{ fontSize: 16, color: '#fff', fontWeight: '600', }}>Thêm địa chỉ</Text>
-
-        </TouchableOpacity>
+        
 
       </ScrollView>
     </>

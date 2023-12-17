@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, Alert, ToastAndroid } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
-import { DELETE_ADDRESS_MEMBERS, UPDATE_STATUS_ADDRESS_MEMBERS } from '../../API'
+import { DELETE_ADDRESS_MEMBERS, UPDATE_STATUS_ADDRESS_MEMBERS } from '../../api'
 import { useSelector } from 'react-redux';
 import SelectDropdown from 'react-native-select-dropdown'
 import axios from 'axios';
@@ -30,11 +30,11 @@ const ItemAddress = (props) => {
     }
 
     const EditAddress = () => {
-        navigation.navigate('EditAddress', { item: item });
+        navigation.navigate('Sửa địa chỉ', { item: item });
     }
 
     const deleteItem = async () => {
-        await axios.delete(`${DELETE_ADDRESS_MEMBERS}?id=${id}&id_member=${info.id}`).then((res) => {
+        await axios.put(`${DELETE_ADDRESS_MEMBERS}?id=${id}&id_member=${info.id}`).then((res) => {
             if (res.data.errCode == 0) {
                 ToastAndroid.showWithGravity(
                     'Xóa địa chỉ thành công',
@@ -50,14 +50,15 @@ const ItemAddress = (props) => {
         Alert.alert(
             'Thông báo',
             `Bạn có chắc chắn muốn xóa địa chỉ này không?`,
-            [{ text: 'OK', onPress: () => deleteItem() }],
-            { cancelable: false }
+            [{ text: 'OK', onPress: () => deleteItem() },
+            { text: 'Cancel', onPress: () => console.log("OK") },
+        
+            ],
+            {    cancelable: false }
         );
-        console.log(props);
+       
     }
-    // useEffect(()=>{
-    //     console.log(props.key);
-    // },[])
+   
 
     const formatPhoneNumber = (phoneNumber) => {
         // Định dạng số điện thoại thành 'XXXX XXX XXX'
@@ -117,12 +118,14 @@ const ItemAddress = (props) => {
                         onPress={() => { EditAddress(item) }}>
                         <Text style={{ color: '#AA0000' }}>Sửa</Text>
                     </TouchableOpacity>
+                {item.status != "MAC-DINH" &&
                     <TouchableOpacity
                         style={{ marginTop: 30 }}
                         onPress={() => { deleteAddress() }}
                     >
                         <Text style={{ color: '#AA0000' }}>Xóa</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>}
+                    
                 </View>
 
             </View>

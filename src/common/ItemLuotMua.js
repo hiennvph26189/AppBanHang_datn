@@ -9,8 +9,9 @@ import { useNavigation,useIsFocused } from "@react-navigation/native";
 import StarRating from 'react-native-star-rating';
 const ItemLuotMua = (props) => {
     const item = props.item
+
     const navigation = useNavigation();
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState(0.0);
     const [totalStar, setTotalStar] = useState(0);
   
     const info = useSelector(state => state.Reducers.arrUser);
@@ -27,6 +28,7 @@ const ItemLuotMua = (props) => {
         }
     }
     useEffect(()=>{
+       
         getTotalStarProduct()
     })
     showImage = (image)=>{
@@ -51,7 +53,7 @@ const ItemLuotMua = (props) => {
    onAddToCart= async(item)=>{
      
         let id =  info.id
-        // console.log("Ok")
+        
         if(id&&item.id){
          
                 let data = {
@@ -75,6 +77,8 @@ const ItemLuotMua = (props) => {
                 })
            
            
+        }else{
+           return alert("Bạn chưa đăng nhập")
         }
     }
     handleDetailProduct = (id)=>{
@@ -173,13 +177,11 @@ const ItemLuotMua = (props) => {
                             <StarRating
                                 disabled={false}
                                 maxStars={5}
-                                rating={rating}
+                                rating={parseFloat(rating)}
                                 fullStarColor="#FFA500"
                                 emptyStarColor="#FFA500"
                                 halfStarColor="#FFA500"
-                                starSize={15}
-                                
-                                
+                                starSize={15}  
                             />
                             
 

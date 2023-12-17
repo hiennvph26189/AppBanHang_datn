@@ -33,7 +33,7 @@ const ItemDanhSach = (props) => {
 }
    onAddToCart= async(item)=>{
     let id =  info.id
-    // console.log("Ok")
+ 
     if(id&&item.id){
      
             let data = {
@@ -64,13 +64,15 @@ const ItemDanhSach = (props) => {
             })
        
        
+    }else{
+        return alert("Bạn chưa đăng nhập")
     }
     }
     handleDetailProduct = (id)=>{
         navigation.navigate('Chi tiết sản phẩm',{id: id},{handleDetailProduct:{handleDetailProduct}});
     }
     return (
-        <TouchableOpacity key={props.i} onPress={()=>{handleDetailProduct(item.id)}} style={{
+        <TouchableOpacity  onPress={()=>{handleDetailProduct(item.id)}} style={{
             width: 180,
             height: "auto",
             borderRadius: 10,
