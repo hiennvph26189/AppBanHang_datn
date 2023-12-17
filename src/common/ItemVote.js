@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import { useNavigation,useIsFocused } from "@react-navigation/native";
 import VoteStar from './VoteStar';
 
-const ItemVote = () => {
+const ItemVote = (props) => {
   const navigation = useNavigation();
     const route = props.route;
     let id_member = route.params.id_member

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Icon from "react-native-vector-icons/MaterialCommunityIcons"
 import axios from "axios";
 import Header from "../common/Header";
-import { PROFILEMEMBER, LOGIN } from "../../API";
+import { PROFILEMEMBER, LOGIN,GET_ALL_USER_ORDERS } from "../../API";
 import CommonButton from "../common/CommonButton";
 import CustomTextInput from "../common/CustomTextInput";
 import { updateEmail } from "../redux/actions/Actions";
@@ -27,6 +27,7 @@ const Profile = (props) => {
     // get profile
     const [profile, setProfile] = useState({});
     const [refreshing, setRefeshing] = useState(false);
+    const [getAllOrders,setGetAllOrders]= useState([]);
     const isFocused = useIsFocused();
     const dispatch = useDispatch();
 
@@ -35,7 +36,28 @@ const Profile = (props) => {
         x = x.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
         return x;
     }
+    const countAllOrders = ()=>{
+        let count = 0
+        if(getAllOrders){
+            getAllOrders.map((iten,index)=>{
+               if(iten.status == 3){
+                count = count+1
+               }
+            })
+        }
+        return count;
+    }
 
+    const getAllOrder = async()=>{
+        let arr = []
+        await axios.get(`${GET_ALL_USER_ORDERS}?id=${info.id}`).then((res)=>{
+            
+            if(res.data.errCode === 0){
+                setGetAllOrders(res.data.getAllOrder)
+                setRefeshing(false)
+            }
+        }).catch((err)=>{console.log(err)})
+    }
     const data = {
         id: info.id,
     }
@@ -49,6 +71,9 @@ const Profile = (props) => {
         props.setSelectedTab1()
 
     }
+    const priceProfile = ()=>{
+        navigation.navigate('PriceProfile',{id:info.id})
+    } 
 
     // chuyển màn hình lịch sử đơn hàng
     const historyBuyProduct = () => {
@@ -73,6 +98,7 @@ const Profile = (props) => {
     useEffect(() => {
         setError(false);
         getProfile();
+        getAllOrder()
     }, [isFocused])
     // refresh lại dữ liệu
     const onRefresh = () => {
@@ -164,7 +190,7 @@ const Profile = (props) => {
                                 <Caption>Wallet</Caption>
                             </View>
                             <View style={styles.infoBox}>
-                                {/* <Title style={styles.title}>{countAllOrders()}</Title> */}
+                                <Title style={styles.title}>{countAllOrders()}</Title>
                                 <Caption>Orders</Caption>
                             </View>
                         </View>
@@ -178,7 +204,7 @@ const Profile = (props) => {
                                 </View>
 
                             </TouchableRipple>
-                            <TouchableRipple >
+                            <TouchableRipple onPress={()=>{priceProfile()}}>
                                 <View style={styles.menuItem}>
                                     <Icon name="credit-card" color="#000" size={25} />
                                     <Text style={styles.menuItemText}>
@@ -205,11 +231,11 @@ const Profile = (props) => {
                                 </View>
 
                             </TouchableRipple>
-                            <TouchableRipple >
+                            <TouchableRipple onPress={()=>{navigation.navigate('ListAddress')}}>
                                 <View style={styles.menuItem}>
                                     <Icon name="account-check-outline" color="#000" size={25} />
                                     <Text style={styles.menuItemText}>
-                                        Hỗ trợ
+                                        Địa chỉ nhận hàng
                                     </Text>
                                 </View>
 

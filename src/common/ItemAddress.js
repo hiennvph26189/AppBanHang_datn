@@ -124,12 +124,13 @@ const ItemAddress = (props) => {
                         onPress={() => { EditAddress(item) }}>
                         <Text style={{ color: '#AA0000' }}>Sửa</Text>
                     </TouchableOpacity>
+                    {item.status != "MAC-DINH" &&
                     <TouchableOpacity
                         style={{ marginTop: 30 }}
                         onPress={() => { deleteAddress() }}
                     >
                         <Text style={{ color: '#AA0000' }}>Xóa</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>}
                 </View>
 
             </View>

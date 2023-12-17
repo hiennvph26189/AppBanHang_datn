@@ -1,11 +1,11 @@
-import { View, Text, Image, TouchableOpacity, Pressable, StyleSheet, ToastAndroid,Alert } from 'react-native'
+import { View, Text, Image, TouchableOpacity, Pressable, StyleSheet, ToastAndroid, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import { useDispatch, useSelector } from 'react-redux';
 import FontAwesome from "react-native-vector-icons/FontAwesome"
 import axios from 'axios';
 import Icon from "react-native-vector-icons/Foundation"
-import { LIKE_PRODUCTS, DELETE_LIKE_PRODUCTS, GET_ONE_LIKE_PRODUCT } from '../../API';
+import { LIKE_PRODUCTS, DELETE_LIKE_PRODUCTS, GET_ONE_LIKE_PRODUCT, POST_CART_USER } from '../../API';
 
 const ItemLike = (props) => {
   const item = props.item
@@ -31,44 +31,12 @@ const ItemLike = (props) => {
     }
   }
 
-  const toggleLike = async () => {
-    console.log(info.id + ' id');
-    if (info.id != undefined) {
-      const data = {
-        id_product: idProduct,
-        id_member: info.id,
-      }
-      console.log('IDproduct' + LIKE_PRODUCTS);
-      await axios.post(LIKE_PRODUCTS, data).then((res) => {
-        console.log(res.data + 'Ssss');
-        if (res.data.errCode == 0) {
-          ToastAndroid.showWithGravity(
-            'Thêm vào danh sách yêu thích thành công',
-            ToastAndroid.SHORT,
-            ToastAndroid.BOTTOM, 25, 50,
-          );
-          getOneLikeProd(idProduct, info.id)
-        }
-
-      })
-    } else {
-      return Alert.alert('Thông báo', 'Bạn chưa đăng nhập', [
-        {
-          text: 'OK', onPress: () => {
-
-          }
-        },
-      ]);
-    }
-
-
-  };
 
   const xoaLike_product = async () => {
     // Hiển thị Alert để xác nhận việc xóa
     Alert.alert(
       'Xác nhận',
-      'Bạn có chắc chắn muốn xóa sản phẩm yêu thích không?',
+      'Bạn có chắc chắn muốn hủy yêu thích sản phẩm này không?',
       [
         {
           text: 'Hủy',
@@ -86,7 +54,7 @@ const ItemLike = (props) => {
                   ToastAndroid.SHORT,
                   ToastAndroid.BOTTOM, 25, 50,
                 );
-                // props.lodaData1()
+                props.lodaData1()
                 // getOneLikeProd(idProduct, info.id)
               }
             } catch (error) {
@@ -100,7 +68,60 @@ const ItemLike = (props) => {
   }
   handleDetailProduct = (id) => {
     navigation.navigate('ProductDetail', { id: id }, { handleDetailProduct: { handleDetailProduct } });
-}
+  }
+
+  const onAddToCart = async (item) => {
+
+    let id = info.id
+    // console.log("Ok")
+    console.log(item.id + ' itemSP');
+    if (id && item.id) {
+
+      let data = {
+        id_member: info.id,
+        id_product: item.id,
+        soLuong: 1,
+        size: ""
+      }
+      await axios.post(POST_CART_USER, data).then(res => {
+
+        if (res.data.errCode === 0) {
+          // navigation.navigate('Home')
+          Alert.alert(
+            'Thông báo',
+            `Thêm thành công! Bạn có muốn xem giỏ hàng của mình không?`,
+            [{ text: 'Cancel' },
+            { text: 'OK', onPress: () => {navigation.navigate('Home')} }
+            
+        ],
+            
+            { cancelable: false }
+        );
+        } else {
+          Alert.alert('Thông báo', res.data.errMessage, [
+            {
+              text: 'OK', onPress: () => {
+
+              }
+            },
+          ]);
+        }
+      })
+
+
+    } else {
+      return Alert.alert(
+        'Thông báo',
+        'Bạn chưa đăng nhập',
+        [
+          {
+            text: 'OK',
+          },
+        ],
+        { cancelable: false }
+      );
+    }
+  }
 
 
   const price = (price) => {
@@ -108,9 +129,10 @@ const ItemLike = (props) => {
     x = x.toLocaleString('it-IT', { style: 'currency', currency: 'VND' });
     return x;
   }
-  // useEffect(()=>{
-  //   props.lodaData1()
-  // },[])
+  useEffect(() => {
+    props.lodaData1()
+    console.log(props + ' props');
+  }, [])
 
   return (
     <View style={{
@@ -139,7 +161,7 @@ const ItemLike = (props) => {
         <Icon name="heart" size={30} color="red" style={{ top: 6 }} />
       </TouchableOpacity>
       <TouchableOpacity
-      onPress={()=>{handleDetailProduct(item.id)}}
+        onPress={() => { handleDetailProduct(item.id) }}
         style={{
           justifyContent: "center",
           alignItems: "center",
@@ -226,7 +248,7 @@ const ItemLike = (props) => {
               paddingBottom: 10,
               paddingTop: 7,
             }} onPress={() => {
-              // onAddToCart(item);
+              onAddToCart(item);
             }}>
             <Text style={{ textAlign: "center" }}>Add to Cart</Text>
           </TouchableOpacity>

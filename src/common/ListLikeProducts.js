@@ -21,6 +21,11 @@ const ListLikeProducts = (props) => {
     }).catch((error) => { console.log(error) });
   }
 
+  const addCart = () => {
+
+    props.addCart()
+}
+
   useEffect(() => {
     getAllLikeProduct()
 
@@ -34,17 +39,19 @@ const ListLikeProducts = (props) => {
       <CustomHeader
         title={'Sản phẩm yêu thích'} />
       <ScrollView>
-      {listLike && listLike.map((item) => {
-        return (
-          // <ItemLuotMua key={item.id}
-          //   item={item}
-          //   // addCart={addCart}
-          // />
-          <ItemLike key={item.id}
-          item = {item}
-          />
-        )
-      })}
+        {listLike && listLike.map((item) => {
+          return (
+            // <ItemLuotMua key={item.id}
+            //   item={item}
+            //   // addCart={addCart}
+            // />
+            <ItemLike key={item.id}
+              item={item}
+              addCart={addCart}
+              lodaData1={lodaData1}
+            />
+          )
+        })}
       </ScrollView>
     </>
   )

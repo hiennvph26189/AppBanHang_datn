@@ -111,3 +111,4 @@ export const LIKE_PRODUCTS = URL+'api-app/like-products'
 export const DELETE_LIKE_PRODUCTS = URL+'api-app/delete-like-products'
 //get one like product in member
 export const GET_ONE_LIKE_PRODUCT = URL+'api-app/get-one-like-product'
+export const CONVERT_CODE_SHA = URL + "api-app/convert-sha"
